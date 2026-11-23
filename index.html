@@ -1,0 +1,2482 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JetStudy｜歷史段考衝刺路徑（南一版第三冊 第2-4章）</title>
+  <!-- Google Fonts: Inter & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans TC', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            soft: '0 4px 20px -2px rgba(15, 23, 42, 0.06)',
+            card: '0 10px 30px -5px rgba(15, 23, 42, 0.08)',
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* 3D 閃卡翻轉樣式 */
+    .perspective-1000 {
+      perspective: 1200px;
+    }
+    .preserve-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+
+    /* 關鍵字高亮與遮蔽背誦模式 */
+    .kw {
+      display: inline-block;
+      padding: 0 0.35rem;
+      margin: 0 0.1rem;
+      border-radius: 0.375rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      background-color: rgba(99, 102, 241, 0.12);
+      color: #4338ca;
+    }
+    .dark .kw {
+      background-color: rgba(129, 140, 248, 0.2);
+      color: #a5b4fc;
+    }
+    .cloze-active .kw {
+      background-color: #cbd5e1;
+      color: transparent !important;
+      cursor: pointer;
+      user-select: none;
+      border: 1px dashed #64748b;
+      min-width: 3rem;
+      text-align: center;
+    }
+    .dark .cloze-active .kw {
+      background-color: #334155;
+      border-color: #64748b;
+    }
+    .cloze-active .kw:hover {
+      background-color: #94a3b8;
+    }
+    .cloze-active .kw.revealed {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: #047857 !important;
+      border: 1px solid #10b981;
+    }
+    .dark .cloze-active .kw.revealed {
+      background-color: rgba(16, 185, 129, 0.25);
+      color: #6ee7b7 !important;
+      border-color: #10b981;
+    }
+
+    /* 隱藏捲軸但保留滾動功能 */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* 微微彈跳動畫 */
+    @keyframes popIn {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen transition-colors duration-200 selection:bg-indigo-500 selection:text-white">
+
+  <!-- =========================================================
+       頂部固定導覽列 (Sticky Navbar)
+  ========================================================== -->
+  <header class="sticky top-0 z-40 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <!-- 上層：Logo、段考準備度、XP、連對、深色模式與重置 -->
+      <div class="flex items-center justify-between h-16 gap-3">
+        <!-- Brand Logo -->
+        <div class="flex items-center gap-2.5 shrink-0 cursor-pointer" onclick="switchTab('path')">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+            <!-- Jetpack / Rocket SVG -->
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+            </svg>
+          </div>
+          <div class="leading-tight">
+            <div class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
+              JetStudy
+              <span class="hidden sm:inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200/70 dark:border-indigo-800">南一三冊 Ch2-4</span>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">歷史段考衝刺路徑</p>
+          </div>
+        </div>
+
+        <!-- 中間：段考準備度進度條 (桌面版顯示) -->
+        <div class="hidden md:flex flex-col flex-1 max-w-xs mx-4">
+          <div class="flex items-center justify-between text-xs font-semibold mb-1">
+            <span class="text-slate-600 dark:text-slate-300">段考準備度</span>
+            <span id="readiness-text-desktop" class="text-indigo-600 dark:text-indigo-400">0%</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+            <div id="readiness-bar-desktop" class="h-full bg-gradient-to-r from-emerald-500 via-amber-500 to-indigo-600 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- 右側：數據徽章 & 工具按鈕 -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5">
+          <!-- XP 徽章 -->
+          <div class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200/80 dark:border-amber-800/60 text-amber-700 dark:text-amber-300 text-xs sm:text-sm font-bold" title="累積學習經驗值">
+            <span>⚡</span>
+            <span id="xp-display">0</span>
+            <span class="hidden sm:inline text-[11px] font-semibold opacity-80">XP</span>
+          </div>
+
+          <!-- 連對/連勝徽章 -->
+          <div class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200/80 dark:border-rose-800/60 text-rose-600 dark:text-rose-300 text-xs sm:text-sm font-bold" title="最高連對紀錄">
+            <span>🔥</span>
+            <span id="streak-display">0</span>
+          </div>
+
+          <!-- 深色模式切換 -->
+          <button onclick="toggleDarkMode()" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="切換深色/淺色模式" aria-label="切換深色模式">
+            <span id="theme-icon">🌙</span>
+          </button>
+
+          <!-- 重置進度按鈕 -->
+          <button onclick="openResetModal()" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-rose-600 hover:border-rose-200 dark:hover:text-rose-400 transition" title="重置學習進度" aria-label="重置進度">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 手機版準備度進度條 -->
+      <div class="md:hidden pb-2.5">
+        <div class="flex items-center justify-between text-[11px] font-semibold mb-1">
+          <span class="text-slate-500 dark:text-slate-400">段考準備度</span>
+          <span id="readiness-text-mobile" class="text-indigo-600 dark:text-indigo-400">0%</span>
+        </div>
+        <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+          <div id="readiness-bar-mobile" class="h-full bg-gradient-to-r from-emerald-500 via-amber-500 to-indigo-600 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- 下層：四大核心分頁切換 -->
+      <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar pb-2.5 pt-1" role="tablist">
+        <button data-tab="path" onclick="switchTab('path')" class="tab-btn flex-1 sm:flex-none whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5">
+          <span>🗺️</span><span>學習路徑</span>
+        </button>
+        <button data-tab="flashcards" onclick="switchTab('flashcards')" class="tab-btn flex-1 sm:flex-none whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5">
+          <span>🃏</span><span>閃卡記憶</span>
+        </button>
+        <button data-tab="quiz" onclick="switchTab('quiz')" class="tab-btn flex-1 sm:flex-none whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5">
+          <span>⚡</span><span>段考刷題</span>
+          <span id="nav-wrong-badge" class="hidden ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] bg-rose-500 text-white font-bold">0</span>
+        </button>
+        <button data-tab="cheatsheet" onclick="switchTab('cheatsheet')" class="tab-btn flex-1 sm:flex-none whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5">
+          <span>📊</span><span>考前速查表</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       主內容區域 (Main Container)
+  ========================================================== -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-20">
+
+    <!-- ==================== 分頁一：學習路徑 ==================== -->
+    <section id="tab-path" class="tab-panel animate-pop">
+      <!-- 頂部儀表板概覽卡片 -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200/80 dark:border-slate-800 shadow-soft mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-full mb-2">
+              🚀 Study Path 衝刺地圖
+            </span>
+            <h1 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+              南一版歷史第三冊｜第 2–4 章段考特訓
+            </h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              沿著 10 個核心微課程節點逐關突破：先精讀（支援遮蔽關鍵字背誦），再做隨堂測驗拿滿星！
+            </p>
+          </div>
+          <div class="flex items-center gap-3 shrink-0">
+            <div class="text-center px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700">
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">已掌握節點</div>
+              <div class="text-lg font-black text-slate-900 dark:text-white"><span id="path-completed-count">0</span><span class="text-sm font-semibold text-slate-400"> / 10</span></div>
+            </div>
+            <div class="text-center px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700">
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">閃卡熟練</div>
+              <div class="text-lg font-black text-slate-900 dark:text-white"><span id="path-fc-count">0</span><span class="text-sm font-semibold text-slate-400"> / 36</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 動態生成的垂直蜿蜒路徑 -->
+      <div id="study-path-container" class="space-y-10"></div>
+    </section>
+
+    <!-- ==================== 分頁二：閃卡記憶 ==================== -->
+    <section id="tab-flashcards" class="tab-panel hidden animate-pop">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">🃏 高頻段考閃卡記憶</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">共 36 張必考名詞、年代、人物與比較。快捷鍵：<kbd class="px-1.5 py-0.5 text-xs bg-slate-200 dark:bg-slate-800 rounded">Space</kbd> 翻面、<kbd class="px-1.5 py-0.5 text-xs bg-slate-200 dark:bg-slate-800 rounded">←</kbd> <kbd class="px-1.5 py-0.5 text-xs bg-slate-200 dark:bg-slate-800 rounded">→</kbd> 切換</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+            掌握率：<span id="fc-mastery-rate">0%</span> (<span id="fc-mastered-num">0</span>/36)
+          </div>
+          <button onclick="shuffleFlashcards()" class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition flex items-center gap-1">
+            🔀 洗牌
+          </button>
+        </div>
+      </div>
+
+      <!-- 篩選列 -->
+      <div class="flex flex-wrap items-center gap-2 mb-6" id="fc-filter-bar">
+        <button onclick="setFcFilter('all')" data-fc-filter="all" class="fc-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition">全部 (36)</button>
+        <button onclick="setFcFilter('ch2')" data-fc-filter="ch2" class="fc-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition">第2章 工業革命</button>
+        <button onclick="setFcFilter('ch3')" data-fc-filter="ch3" class="fc-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition">第3章 伊斯蘭</button>
+        <button onclick="setFcFilter('ch4')" data-fc-filter="ch4" class="fc-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition">第4章 西方與近代</button>
+        <button onclick="setFcFilter('unmastered')" data-fc-filter="unmastered" class="fc-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition">🎯 僅看未掌握</button>
+      </div>
+
+      <!-- 閃卡主體區域 -->
+      <div id="fc-empty-state" class="hidden bg-white dark:bg-slate-900 rounded-3xl p-10 text-center border border-slate-200 dark:border-slate-800 shadow-soft">
+        <div class="text-5xl mb-3">🎉</div>
+        <h3 class="text-xl font-black text-slate-900 dark:text-white">太強了！目前篩選範圍的閃卡已全部掌握！</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 mb-5">你可以切換回「全部」複習，或前往段考刷題測試實力。</p>
+        <button onclick="setFcFilter('all')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition">顯示全部 36 張閃卡</button>
+      </div>
+
+      <div id="fc-stage" class="max-w-2xl mx-auto">
+        <!-- 計數與狀態列 -->
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400 mb-3 px-1">
+          <span id="fc-counter">第 1 / 36 張</span>
+          <span id="fc-status-pill" class="px-2.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300">尚未評分</span>
+        </div>
+
+        <!-- 3D 卡片容器 -->
+        <div class="perspective-1000 w-full h-72 sm:h-80 cursor-pointer select-none" onclick="flipFlashcard()">
+          <div id="fc-card-inner" class="relative w-full h-full transition-transform duration-500 preserve-3d">
+            <!-- 正面 -->
+            <div class="absolute inset-0 backface-hidden bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-200/90 dark:border-slate-800 shadow-card p-6 sm:p-8 flex flex-col justify-between">
+              <div class="flex items-center justify-between">
+                <span id="fc-front-badge" class="text-xs font-bold px-3 py-1 rounded-full">第2章</span>
+                <span class="text-xs font-semibold text-slate-400">問題 / 核心名詞</span>
+              </div>
+              <div class="my-auto text-center px-2">
+                <h3 id="fc-front-text" class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-snug"></h3>
+              </div>
+              <div class="text-center text-xs font-medium text-slate-400 dark:text-slate-500 flex items-center justify-center gap-1.5">
+                <span>👆 點擊卡片或按空白鍵翻面看解析</span>
+              </div>
+            </div>
+
+            <!-- 背面 -->
+            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-slate-900 to-slate-800 dark:from-indigo-950 dark:to-slate-900 text-white rounded-3xl border-2 border-indigo-500/40 shadow-card p-6 sm:p-8 flex flex-col justify-between">
+              <div class="flex items-center justify-between">
+                <span id="fc-back-badge" class="text-xs font-bold px-3 py-1 rounded-full bg-white/15 text-white">解答與考點</span>
+                <span class="text-xs font-semibold text-indigo-300">背起來了嗎？</span>
+              </div>
+              <div class="my-auto text-center px-2 overflow-y-auto max-h-44">
+                <p id="fc-back-text" class="text-base sm:text-lg font-bold leading-relaxed text-white"></p>
+                <p id="fc-back-tip" class="text-xs sm:text-sm text-indigo-200/90 mt-3 pt-3 border-t border-white/10"></p>
+              </div>
+              <div class="text-center text-[11px] text-slate-300/80">
+                請在下方選擇記憶熟練度 👇
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 三段式記憶自評按鈕 -->
+        <div class="grid grid-cols-3 gap-2.5 sm:gap-3 mt-5">
+          <button onclick="rateFlashcard('unknown')" class="py-3 px-2 rounded-2xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 font-bold text-xs sm:text-sm transition active:scale-95">
+            🔴 還不熟<span class="block text-[10px] font-medium opacity-80 mt-0.5">稍後重出</span>
+          </button>
+          <button onclick="rateFlashcard('fuzzy')" class="py-3 px-2 rounded-2xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 font-bold text-xs sm:text-sm transition active:scale-95">
+            🟡 有點模糊<span class="block text-[10px] font-medium opacity-80 mt-0.5">標記複習</span>
+          </button>
+          <button onclick="rateFlashcard('mastered')" class="py-3 px-2 rounded-2xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 font-bold text-xs sm:text-sm transition active:scale-95">
+            🟢 已掌握<span class="block text-[10px] font-medium opacity-80 mt-0.5">+10 XP</span>
+          </button>
+        </div>
+
+        <!-- 上一張 / 下一張導覽 -->
+        <div class="flex items-center justify-between mt-5">
+          <button onclick="prevFlashcard()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+            ← 上一張
+          </button>
+          <button onclick="flipFlashcard()" class="px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-indigo-600 text-white text-sm font-bold hover:opacity-90 transition">
+            🔄 翻面
+          </button>
+          <button onclick="nextFlashcard()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+            下一張 →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 分頁三：段考刷題 & 錯題本 ==================== -->
+    <section id="tab-quiz" class="tab-panel hidden animate-pop">
+      <!-- 模式選擇畫面 -->
+      <div id="quiz-menu-view">
+        <div class="mb-6">
+          <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">⚡ 段考模擬刷題 & 錯題本</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">收錄 30 題高中段考水準單選題（含史料題、因果題、比較題），答錯自動收錄進錯題本！</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <!-- 全範圍模擬測驗 -->
+          <div class="md:col-span-2 bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-soft flex flex-col justify-between">
+            <div>
+              <div class="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-full mb-3">
+                🏆 全範圍模擬考
+              </div>
+              <h3 class="text-lg font-black text-slate-900 dark:text-white">跨章節混合實戰測驗</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 mb-5">隨機抽選第 2–4 章精選題目，考完即時呈現各章節答對率弱點分析。</p>
+            </div>
+            <div class="flex flex-wrap gap-2.5">
+              <button onclick="startQuiz('all', 10)" class="flex-1 min-w-[100px] py-3 px-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition shadow-sm">
+                快速 10 題
+              </button>
+              <button onclick="startQuiz('all', 20)" class="flex-1 min-w-[100px] py-3 px-4 rounded-2xl bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/60 dark:hover:bg-indigo-900/70 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 font-bold text-sm transition">
+                標準 20 題
+              </button>
+              <button onclick="startQuiz('all', 30)" class="flex-1 min-w-[100px] py-3 px-4 rounded-2xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold text-sm transition">
+                全套 30 題
+              </button>
+            </div>
+          </div>
+
+          <!-- 錯題本複習 -->
+          <div class="bg-gradient-to-br from-rose-50 to-orange-50 dark:from-rose-950/40 dark:to-slate-900 rounded-3xl p-6 border border-rose-200/80 dark:border-rose-900/60 shadow-soft flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="inline-flex items-center gap-1 text-xs font-bold text-rose-600 dark:text-rose-400 bg-white/80 dark:bg-rose-950 px-3 py-1 rounded-full">
+                  🔥 專屬錯題本
+                </span>
+                <span id="menu-wrong-count" class="text-2xl font-black text-rose-600 dark:text-rose-400">0</span>
+              </div>
+              <h3 class="text-lg font-black text-slate-900 dark:text-white">消滅段考失分點</h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 mb-5">自動收集答錯題目；在錯題本模式答對後，系統會自動將該題移出！</p>
+            </div>
+            <button id="btn-start-wrong" onclick="startQuiz('wrong', 99)" class="w-full py-3 px-4 rounded-2xl bg-rose-600 hover:bg-rose-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm transition">
+              開始複習錯題
+            </button>
+          </div>
+        </div>
+
+        <!-- 分章特訓 -->
+        <h3 class="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">分章重點特訓（各 10 題）</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <button onclick="startQuiz('ch2', 10)" class="text-left bg-white dark:bg-slate-900 hover:border-emerald-400 dark:hover:border-emerald-500 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-soft transition group">
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black mb-3 group-hover:scale-105 transition">2</div>
+            <div class="font-black text-slate-900 dark:text-white">第 2 章 第 3 節</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">工業革命、資本/社會主義與國會改革</div>
+          </button>
+          <button onclick="startQuiz('ch3', 10)" class="text-left bg-white dark:bg-slate-900 hover:border-amber-400 dark:hover:border-amber-500 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-soft transition group">
+            <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center font-black mb-3 group-hover:scale-105 transition">3</div>
+            <div class="font-black text-slate-900 dark:text-white">第 3 章 伊斯蘭世界</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">哈里發、三大帝國、文化與近代變革</div>
+          </button>
+          <button onclick="startQuiz('ch4', 10)" class="text-left bg-white dark:bg-slate-900 hover:border-indigo-400 dark:hover:border-indigo-500 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-soft transition group">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-black mb-3 group-hover:scale-105 transition">4</div>
+            <div class="font-black text-slate-900 dark:text-white">第 4 章 西方與近代</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">大航海、大交換、非洲大獵與亞太拓殖</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 作答中畫面 -->
+      <div id="quiz-active-view" class="hidden max-w-3xl mx-auto">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <button onclick="quitQuiz()" class="text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-white px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 transition">
+            ← 結束測驗
+          </button>
+          <div class="flex items-center gap-2">
+            <span id="quiz-combo-badge" class="hidden px-2.5 py-1 rounded-full bg-orange-500 text-white text-xs font-black animate-bounce">🔥 2 連對</span>
+            <span id="quiz-progress-text" class="text-xs font-bold text-slate-500 dark:text-slate-400">1 / 10</span>
+          </div>
+        </div>
+        <!-- 進度條 -->
+        <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-6">
+          <div id="quiz-progress-bar" class="h-full bg-indigo-600 rounded-full transition-all duration-300" style="width: 10%"></div>
+        </div>
+
+        <!-- 題目卡片 -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-card">
+          <div class="flex items-center justify-between gap-2 mb-4">
+            <span id="quiz-q-badge" class="text-xs font-bold px-3 py-1 rounded-full">第2章</span>
+            <span id="quiz-q-type" class="text-xs font-semibold text-slate-400">單選題</span>
+          </div>
+          <h3 id="quiz-q-text" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-relaxed mb-6"></h3>
+
+          <!-- 選項清單 -->
+          <div id="quiz-options" class="space-y-3"></div>
+
+          <!-- 即時解析區塊 -->
+          <div id="quiz-explanation-box" class="hidden mt-6 p-4 sm:p-5 rounded-2xl border text-sm leading-relaxed animate-pop">
+            <div id="quiz-result-banner" class="font-black text-base mb-1.5"></div>
+            <p id="quiz-explanation-text" class="text-slate-700 dark:text-slate-200"></p>
+          </div>
+
+          <!-- 下一題按鈕 -->
+          <div id="quiz-next-wrap" class="hidden mt-6 flex justify-end">
+            <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition shadow-md">
+              下一題 →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 測驗結果分析畫面 -->
+      <div id="quiz-summary-view" class="hidden max-w-2xl mx-auto animate-pop">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-card text-center">
+          <div class="text-5xl mb-3" id="summary-emoji">🏆</div>
+          <h3 class="text-2xl font-black text-slate-900 dark:text-white">測驗完成！</h3>
+          <p id="summary-subtitle" class="text-sm text-slate-500 dark:text-slate-400 mt-1 mb-6"></p>
+
+          <!-- 分數與統計 -->
+          <div class="grid grid-cols-3 gap-3 mb-7">
+            <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-100 dark:border-indigo-900">
+              <div class="text-xs font-bold text-indigo-600 dark:text-indigo-300">得分率</div>
+              <div id="summary-score" class="text-2xl sm:text-3xl font-black text-indigo-700 dark:text-indigo-200 mt-1">0%</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/50 border border-amber-100 dark:border-amber-900">
+              <div class="text-xs font-bold text-amber-600 dark:text-amber-300">獲得 XP</div>
+              <div id="summary-xp" class="text-2xl sm:text-3xl font-black text-amber-700 dark:text-amber-200 mt-1">+0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-100 dark:border-rose-900">
+              <div class="text-xs font-bold text-rose-600 dark:text-rose-300">最高連對</div>
+              <div id="summary-combo" class="text-2xl sm:text-3xl font-black text-rose-700 dark:text-rose-200 mt-1">0</div>
+            </div>
+          </div>
+
+          <!-- 各章節答對率分析 -->
+          <div class="text-left bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-5 mb-6 border border-slate-200/70 dark:border-slate-700">
+            <h4 class="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">📊 本次各章節掌握度分析</h4>
+            <div id="summary-breakdown" class="space-y-3"></div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <button id="summary-review-wrong-btn" onclick="startQuiz('wrong', 99)" class="hidden px-5 py-3 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm transition">
+              🔥 立即複習錯題本
+            </button>
+            <button onclick="quitQuiz()" class="px-5 py-3 rounded-2xl bg-slate-900 dark:bg-indigo-600 hover:opacity-90 text-white font-bold text-sm transition">
+              返回刷題選單
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 分頁四：考前速查表 ==================== -->
+    <section id="tab-cheatsheet" class="tab-panel hidden animate-pop">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">📊 考前 5 分鐘速查總表</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">濃縮 6 張段考最愛出的比較與年表，輸入關鍵字即時篩選定位！</p>
+        </div>
+        <!-- 關鍵字搜尋框 -->
+        <div class="relative w-full sm:w-72">
+          <input id="cs-search-input" type="text" oninput="filterCheatSheet()" placeholder="搜尋關鍵字（如：費邊、奎寧、暹羅...）" class="w-full pl-9 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
+          <span class="absolute left-3 top-2.5 text-slate-400">🔍</span>
+        </div>
+      </div>
+
+      <!-- 快速跳轉膠囊 -->
+      <div class="flex flex-wrap gap-2 mb-6">
+        <a href="#cs-1" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:opacity-80">1. 資本主義演變</a>
+        <a href="#cs-2" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:opacity-80">2. 社會主義＆英國改革</a>
+        <a href="#cs-3" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:opacity-80">3. 伊斯蘭政權＆三大帝國</a>
+        <a href="#cs-4" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:opacity-80">4. 近代改革＆女性服飾</a>
+        <a href="#cs-5" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:opacity-80">5. 葡西荷英＆大交換/三角貿易</a>
+        <a href="#cs-6" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:opacity-80">6. 19世紀非亞太拓殖總整</a>
+      </div>
+
+      <div id="cs-container" class="space-y-8">
+        <!-- 表 1 -->
+        <div id="cs-1" class="cs-card bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden">
+          <div class="px-6 py-4 bg-emerald-50/80 dark:bg-emerald-950/40 border-b border-emerald-100 dark:border-emerald-900/60 flex items-center justify-between">
+            <h3 class="font-black text-emerald-900 dark:text-emerald-200 text-base sm:text-lg">1. 商業資本主義 vs 工業資本主義演變表</h3>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-600 text-white">第 2 章</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+              <thead class="bg-slate-50 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 text-xs uppercase">
+                <tr>
+                  <th class="px-5 py-3">階段</th>
+                  <th class="px-5 py-3">時間與背景</th>
+                  <th class="px-5 py-3">核心制度與特色</th>
+                  <th class="px-5 py-3">代表案例與影響</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr class="cs-row">
+                  <td class="px-5 py-3.5 font-bold text-emerald-700 dark:text-emerald-400 whitespace-nowrap">商業資本主義</td>
+                  <td class="px-5 py-3.5">16～18世紀（中古後期商業活絡、大航海時代、商業革命）</td>
+                  <td class="px-5 py-3.5">銀行業與信用制度、合股公司分攤風險、交易所與股票市場、政府頒特許狀予「特許公司」享專賣獨占權</td>
+                  <td class="px-5 py-3.5">1602 阿姆斯特丹證券交易所、英國東印度公司、荷蘭聯合東印度公司</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3.5 font-bold text-emerald-700 dark:text-emerald-400 whitespace-nowrap">工業資本主義</td>
+                  <td class="px-5 py-3.5">18世紀中～19世紀中（工業革命加速發展）</td>
+                  <td class="px-5 py-3.5">資本投入工業擴大生產；政府頒布「有限責任法」防範泡沫化並保障投資人；科學與工業結合、重視研發與職教</td>
+                  <td class="px-5 py-3.5">證券經紀公司興起、刺激產業合併（帶來新工作機會，也造成失業與貧富不均）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 表 2 -->
+        <div id="cs-2" class="cs-card bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden">
+          <div class="px-6 py-4 bg-emerald-50/80 dark:bg-emerald-950/40 border-b border-emerald-100 dark:border-emerald-900/60 flex items-center justify-between">
+            <h3 class="font-black text-emerald-900 dark:text-emerald-200 text-base sm:text-lg">2. 社會主義三大學派 ＆ 英國國會改革年表</h3>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-600 text-white">第 2 章</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+              <thead class="bg-slate-50 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 text-xs uppercase">
+                <tr>
+                  <th class="px-5 py-3">學派 / 法案</th>
+                  <th class="px-5 py-3">時間</th>
+                  <th class="px-5 py-3">代表人物 / 受惠對象</th>
+                  <th class="px-5 py-3">核心主張與改革內容</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-emerald-700 dark:text-emerald-400">烏托邦社會主義</td>
+                  <td class="px-5 py-3 whitespace-nowrap">19世紀前期</td>
+                  <td class="px-5 py-3">聖西門</td>
+                  <td class="px-5 py-3">主張建立「公社」、「合作社」，經濟互助以達均富</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-emerald-700 dark:text-emerald-400">馬克思社會主義</td>
+                  <td class="px-5 py-3 whitespace-nowrap">19世紀中期</td>
+                  <td class="px-5 py-3">馬克思</td>
+                  <td class="px-5 py-3">主張暴力革命奪權，強調唯物辯證法、剩餘價值、階級鬥爭</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-emerald-700 dark:text-emerald-400">費邊社會主義</td>
+                  <td class="px-5 py-3 whitespace-nowrap">19世紀後期</td>
+                  <td class="px-5 py-3">蕭伯納</td>
+                  <td class="px-5 py-3">主張漸進溫和改革，提倡組織工黨、透過國會立法改善勞工待遇</td>
+                </tr>
+                <tr class="cs-row bg-emerald-50/30 dark:bg-emerald-950/20">
+                  <td class="px-5 py-3 font-bold">英國國會改革</td>
+                  <td class="px-5 py-3 whitespace-nowrap">1832年</td>
+                  <td class="px-5 py-3">中產階級受惠</td>
+                  <td class="px-5 py-3">廢除「衰敗市鎮」席次，重配給新興工業城市（憲章運動訴求之一）</td>
+                </tr>
+                <tr class="cs-row bg-emerald-50/30 dark:bg-emerald-950/20">
+                  <td class="px-5 py-3 font-bold">英國國會改革</td>
+                  <td class="px-5 py-3 whitespace-nowrap">1867 / 1884年</td>
+                  <td class="px-5 py-3">1867 工人 / 1884 農民</td>
+                  <td class="px-5 py-3">兩度放寬選舉財產門檻與名額，擴大男性普選基礎</td>
+                </tr>
+                <tr class="cs-row bg-emerald-50/30 dark:bg-emerald-950/20">
+                  <td class="px-5 py-3 font-bold">英國婦女參政</td>
+                  <td class="px-5 py-3 whitespace-nowrap">1918 / 1928年</td>
+                  <td class="px-5 py-3">女性選民</td>
+                  <td class="px-5 py-3">1918 部分婦女獲選舉權（有年齡與財產限制）；1928 降齡並取消財產限制</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 表 3 -->
+        <div id="cs-3" class="cs-card bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden">
+          <div class="px-6 py-4 bg-amber-50/80 dark:bg-amber-950/40 border-b border-amber-100 dark:border-amber-900/60 flex items-center justify-between">
+            <h3 class="font-black text-amber-900 dark:text-amber-200 text-base sm:text-lg">3. 伊斯蘭早期政權演變 ＆ 16世紀三大帝國比較</h3>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500 text-white">第 3 章</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+              <thead class="bg-slate-50 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 text-xs uppercase">
+                <tr>
+                  <th class="px-5 py-3">政權 / 帝國</th>
+                  <th class="px-5 py-3">時間與首都</th>
+                  <th class="px-5 py-3">政治與宗教特色</th>
+                  <th class="px-5 py-3">重要成就與衰亡</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-amber-700 dark:text-amber-400">正統哈里發</td>
+                  <td class="px-5 py-3">632–661</td>
+                  <td class="px-5 py-3">烏瑪「推舉制」產生四位哈里發；阿拉伯文成官方語</td>
+                  <td class="px-5 py-3">征服埃及、敘利亞、兩河、波斯；後期因繼承爆發內戰</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-amber-700 dark:text-amber-400">奧瑪雅王朝</td>
+                  <td class="px-5 py-3">661–750｜大馬士革</td>
+                  <td class="px-5 py-3">哈里發改「世襲制」；實行阿拉伯中心政策（特權）</td>
+                  <td class="px-5 py-3">征服北非、西班牙、中亞；遭反對者與波斯人推翻</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-amber-700 dark:text-amber-400">阿拔斯王朝</td>
+                  <td class="px-5 py-3">750–1258｜巴格達</td>
+                  <td class="px-5 py-3">重用波斯官僚、重心東移；10世紀後面臨後奧瑪雅與法提馬挑戰</td>
+                  <td class="px-5 py-3">8–10世紀「黃金時代」（智慧宮、百年翻譯）；1258 亡於蒙古</td>
+                </tr>
+                <tr class="cs-row bg-amber-50/30 dark:bg-amber-950/20">
+                  <td class="px-5 py-3 font-bold text-amber-800 dark:text-amber-300">鄂圖曼帝國</td>
+                  <td class="px-5 py-3">13世紀末起｜伊斯坦堡</td>
+                  <td class="px-5 py-3">奧斯曼建立、橫跨歐亞非；「新軍」制度（非穆斯林改信受訓）</td>
+                  <td class="px-5 py-3">1453 滅拜占庭；1683 維也納之戰敗北由攻轉守、財政失衡</td>
+                </tr>
+                <tr class="cs-row bg-amber-50/30 dark:bg-amber-950/20">
+                  <td class="px-5 py-3 font-bold text-amber-800 dark:text-amber-300">薩法維帝國</td>
+                  <td class="px-5 py-3">16世紀初｜伊斯法罕</td>
+                  <td class="px-5 py-3">伊朗一帶；以「什葉派」為國教區別鄂圖曼</td>
+                  <td class="px-5 py-3">阿拔斯時期鼎盛、波斯細密畫；邊緣化遜尼派導致內亂分裂</td>
+                </tr>
+                <tr class="cs-row bg-amber-50/30 dark:bg-amber-950/20">
+                  <td class="px-5 py-3 font-bold text-amber-800 dark:text-amber-300">蒙兀兒帝國</td>
+                  <td class="px-5 py-3">16世紀初｜德里</td>
+                  <td class="px-5 py-3">蒙古後代建於北印度；阿克巴採宗教寬容、貿易發達</td>
+                  <td class="px-5 py-3">細密畫高度發展；奧朗則布改獨尊伊斯蘭激化對立而衰</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 表 4 -->
+        <div id="cs-4" class="cs-card bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden">
+          <div class="px-6 py-4 bg-amber-50/80 dark:bg-amber-950/40 border-b border-amber-100 dark:border-amber-900/60 flex items-center justify-between">
+            <h3 class="font-black text-amber-900 dark:text-amber-200 text-base sm:text-lg">4. 近代伊斯蘭改革、二戰後三路線 ＆ 女性服飾對照</h3>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500 text-white">第 3 章</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+              <thead class="bg-slate-50 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 text-xs uppercase">
+                <tr>
+                  <th class="px-5 py-3">分類 / 名稱</th>
+                  <th class="px-5 py-3">代表人物 / 國家 / 地區</th>
+                  <th class="px-5 py-3">核心特色與考點</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-amber-700 dark:text-amber-400">19世紀泛伊斯蘭</td>
+                  <td class="px-5 py-3">阿富汗尼 / 阿布杜</td>
+                  <td class="px-5 py-3">阿富汗尼倡團結全球穆斯林擁共同哈里發＋學西方科技；阿布杜倡調和傳統與現代（埃及愛資哈爾大學傳播）</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold">二戰後：保守派</td>
+                  <td class="px-5 py-3">沙烏地阿拉伯、塔利班阿富汗</td>
+                  <td class="px-5 py-3">根據對伊斯蘭教法的理解與詮釋來治理國家</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold">二戰後：世俗派</td>
+                  <td class="px-5 py-3">土耳其</td>
+                  <td class="px-5 py-3">以西方現代化標準改造穆斯林社會，匹配科學與世俗行為</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold">二戰後：折衷派</td>
+                  <td class="px-5 py-3">穆斯林兄弟會</td>
+                  <td class="px-5 py-3">學習特定西方科技、調和傳統信仰與科學，達成「現代化而非西方化」</td>
+                </tr>
+                <tr class="cs-row bg-amber-50/30 dark:bg-amber-950/20">
+                  <td class="px-5 py-3 font-bold">服飾：布卡 / 尼卡伯</td>
+                  <td class="px-5 py-3">阿富汗 / 沙烏地阿拉伯</td>
+                  <td class="px-5 py-3">布卡（Burqa）覆蓋率最高，眼部僅留網狀窗口；尼卡伯（Niqab）遮臉只露雙眼（2010法國禁公共場所遮臉面紗）</td>
+                </tr>
+                <tr class="cs-row bg-amber-50/30 dark:bg-amber-950/20">
+                  <td class="px-5 py-3 font-bold">服飾：喜瑪爾 / 恰多爾 / 喜加伯</td>
+                  <td class="px-5 py-3">伊朗、北非 / 全球最常見</td>
+                  <td class="px-5 py-3">喜瑪爾（遮頭頸肩至腰露臉）、恰多爾（全身罩袍露臉）、喜加伯（Hijab，最常見頭巾，樣式多元）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 表 5 -->
+        <div id="cs-5" class="cs-card bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden">
+          <div class="px-6 py-4 bg-indigo-50/80 dark:bg-indigo-950/40 border-b border-indigo-100 dark:border-indigo-900/60 flex items-center justify-between">
+            <h3 class="font-black text-indigo-900 dark:text-indigo-200 text-base sm:text-lg">5. 葡西荷英擴張比較 ＆ 哥倫布大交換 / 三角貿易</h3>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white">第 4 章</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+              <thead class="bg-slate-50 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 text-xs uppercase">
+                <tr>
+                  <th class="px-5 py-3">國家 / 主題</th>
+                  <th class="px-5 py-3">核心據點與年代</th>
+                  <th class="px-5 py-3">經營策略與影響</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-indigo-700 dark:text-indigo-400">葡萄牙</td>
+                  <td class="px-5 py-3">1488好望角、1498印度、麻六甲、澳門、長崎</td>
+                  <td class="px-5 py-3">最先建帝國，以港口強制商船繳關稅掌控航線，打開中日貿易</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-indigo-700 dark:text-indigo-400">西班牙</td>
+                  <td class="px-5 py-3">1492美洲、1521阿茲提克、1533印加</td>
+                  <td class="px-5 py-3">深入內陸直接統治、開採白銀（引發歐洲物價革命），美洲古文明瓦解</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-indigo-700 dark:text-indigo-400">荷蘭</td>
+                  <td class="px-5 py-3">1602 VOC、巴達維亞（爪哇）、1624臺灣</td>
+                  <td class="px-5 py-3">壟斷香料群島（丁香、肉豆蔻）；以臺灣為中日東南亞轉口中心</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-indigo-700 dark:text-indigo-400">英國</td>
+                  <td class="px-5 py-3">1600東印度公司、印度、北美十三殖民地</td>
+                  <td class="px-5 py-3">1651起頒「航海法」引發荷英海上戰爭，擊敗荷蘭成新殖民霸權</td>
+                </tr>
+                <tr class="cs-row bg-indigo-50/30 dark:bg-indigo-950/20">
+                  <td class="px-5 py-3 font-bold">哥倫布大交換</td>
+                  <td class="px-5 py-3">1500年後 新大陸 ↔ 舊大陸</td>
+                  <td class="px-5 py-3"><strong>新→舊</strong>：馬鈴薯、番薯（助人口成長）、玉米、番茄、辣椒、菸草、可可豆、火雞、南瓜、鳳梨。<br><strong>舊→新</strong>：甘蔗、咖啡、牛羊馬豬、小麥、香蕉、葡萄、<strong>疾病</strong>（原住民浩劫）。</td>
+                </tr>
+                <tr class="cs-row bg-indigo-50/30 dark:bg-indigo-950/20">
+                  <td class="px-5 py-3 font-bold">三角貿易</td>
+                  <td class="px-5 py-3">16–19世紀（總計約1,252萬奴隸）</td>
+                  <td class="px-5 py-3"><strong>歐洲</strong>（蘭姆酒、槍砲、布匹）→ <strong>西非奴隸海岸</strong>（黑奴，18世紀最高約649萬）→ <strong>美洲</strong>（熱帶作物、菸草、金銀）→ 歐洲。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 表 6 -->
+        <div id="cs-6" class="cs-card bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden">
+          <div class="px-6 py-4 bg-indigo-50/80 dark:bg-indigo-950/40 border-b border-indigo-100 dark:border-indigo-900/60 flex items-center justify-between">
+            <h3 class="font-black text-indigo-900 dark:text-indigo-200 text-base sm:text-lg">6. 19世紀列強在非洲、亞洲、太平洋拓殖 ＆ 維持獨立國家總整</h3>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white">第 4 章</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+              <thead class="bg-slate-50 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 text-xs uppercase">
+                <tr>
+                  <th class="px-5 py-3">區域</th>
+                  <th class="px-5 py-3">列強拓殖重點</th>
+                  <th class="px-5 py-3">維持獨立國家與關鍵原因（必考！）</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-indigo-700 dark:text-indigo-400">非洲大獵</td>
+                  <td class="px-5 py-3">1850奎寧治瘧疾＋李文斯頓著作；1884俾斯麥柏林會議；英縱向、法橫向貫穿；比利時利奧波德二世剛果「血橡膠」；早期特許公司→20世紀初政府直統</td>
+                  <td class="px-5 py-3"><strong>衣索比亞</strong>（擊敗義大利）、<strong>賴比瑞亞</strong>（美國扶持）</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-indigo-700 dark:text-indigo-400">印度與東南亞</td>
+                  <td class="px-5 py-3">英1763獨霸印度、1858直接統治（鐵路電報不對稱貿易、禁娑提）；英1824新加坡、馬來亞（橡膠錫）、緬甸（柚木紅寶石）；法中南半島（越寮柬）</td>
+                  <td class="px-5 py-3"><strong>暹羅（泰國）</strong>：處英法緩衝區＋國王拉瑪五世（朱拉隆功）中央集權與西化改革</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-indigo-700 dark:text-indigo-400">中亞</td>
+                  <td class="px-5 py-3">俄羅斯主要動機為「領土與暖水港」（市場原料次要），19世紀下半葉併入大部分中亞</td>
+                  <td class="px-5 py-3">直至 <strong>1991年蘇聯解體</strong> 後中亞各國才紛紛獨立</td>
+                </tr>
+                <tr class="cs-row">
+                  <td class="px-5 py-3 font-bold text-indigo-700 dark:text-indigo-400">太平洋</td>
+                  <td class="px-5 py-3">澳紐定居殖民地；19世紀初蒸汽船補給站（法大溪地、英斐濟）；1898夏威夷王國併入美國</td>
+                  <td class="px-5 py-3"><strong>東加王國</strong>（尋求英國保護維持獨立）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       微課程沉浸式彈窗 (Node Micro-Lesson Modal)
+  ========================================================== -->
+  <div id="lesson-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-3 sm:p-6">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-3xl max-h-[90vh] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden animate-pop">
+      <!-- Modal Header -->
+      <div class="px-5 sm:px-6 py-4 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-3 bg-slate-50/80 dark:bg-slate-900">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span id="modal-unit-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full">單元一</span>
+            <span id="modal-time-badge" class="text-xs font-semibold text-slate-400">⏱️ 5 分鐘</span>
+          </div>
+          <h3 id="modal-node-title" class="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-tight"></h3>
+        </div>
+        <button onclick="closeLessonModal()" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-800 transition" aria-label="關閉">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Step 切換列 -->
+      <div class="px-5 sm:px-6 py-3 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <button id="step1-btn" onclick="switchLessonStep(1)" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">
+            Step 1 重點精讀
+          </button>
+          <span class="text-slate-300 dark:text-slate-600">→</span>
+          <button id="step2-btn" onclick="switchLessonStep(2)" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition">
+            Step 2 隨堂通關測驗
+          </button>
+        </div>
+
+        <!-- 遮蔽關鍵字背誦模式切換 (僅 Step 1 顯示) -->
+        <div id="cloze-controls" class="flex items-center gap-2">
+          <button id="cloze-toggle-btn" onclick="toggleClozeMode()" class="px-3 py-1.5 rounded-xl text-xs font-bold border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 transition flex items-center gap-1.5">
+            <span>🙈</span><span id="cloze-toggle-label">開啟遮蔽背誦</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Scrollable Body -->
+      <div id="modal-body" class="p-5 sm:p-6 overflow-y-auto flex-1 space-y-4">
+        <!-- Step 1 內容 -->
+        <div id="lesson-step1-content" class="space-y-4"></div>
+        <!-- Step 2 內容 -->
+        <div id="lesson-step2-content" class="hidden space-y-5"></div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 sm:px-6 py-4 border-t border-slate-200/80 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900 flex items-center justify-between">
+        <span id="modal-footer-hint" class="text-xs font-medium text-slate-500 dark:text-slate-400">讀完重點後，點擊右側前往通關測驗！</span>
+        <div class="flex items-center gap-2">
+          <button id="modal-goto-step2" onclick="switchLessonStep(2)" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition shadow-sm">
+            挑戰隨堂測驗 →
+          </button>
+          <button id="modal-finish-node" onclick="closeLessonModal()" class="hidden px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition shadow-sm">
+            🎉 完成並返回路徑
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       重置進度確認彈窗 (Custom Modal，不使用 confirm)
+  ========================================================== -->
+  <div id="reset-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+    <div class="bg-white dark:bg-slate-900 max-w-sm w-full rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-2xl text-center animate-pop">
+      <div class="w-12 h-12 rounded-2xl bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center text-2xl mx-auto mb-3">⚠️</div>
+      <h3 class="text-lg font-black text-slate-900 dark:text-white">確定要重置所有學習進度嗎？</h3>
+      <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1.5 mb-6">這將會清除已完成的節點、XP 經驗值、閃卡熟練度與錯題本紀錄，且無法復原。</p>
+      <div class="flex gap-2.5">
+        <button onclick="closeResetModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition">取消</button>
+        <button onclick="confirmResetProgress()" class="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm transition">確定重置</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       Toast 提示訊息容器
+  ========================================================== -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- =========================================================
+       核心資料與應用程式邏輯 (JavaScript)
+  ========================================================== -->
+  <script>
+    /* ============================================================
+       1. 單元與 10 個學習路徑節點資料 (嚴格依據三份簡報)
+    ============================================================ */
+    const UNITS = [
+      {
+        id: 'ch2',
+        label: '單元一｜第 2 章 第 3 節',
+        title: '工業革命的發展與影響',
+        desc: '英國起源要素、都市化與資本主義演變、社會主義學派與英國國會改革',
+        color: 'emerald',
+        nodes: [
+          {
+            id: '1-1',
+            title: '工業革命的起源與擴展',
+            subtitle: '為何始於18世紀後半葉英國？三期擴展路線',
+            time: '5 分鐘',
+            cards: [
+              {
+                heading: '⚙️ 起源與五大開展要素',
+                points: [
+                  '起始時間與地點：{{18世紀後半葉}}的{{英國}}，徹底改變人類生活與生產方式。',
+                  '五大核心要素：大量{{勞動力}}、充沛{{資金}}、無關稅羈絆的流通管道、廣大市場、以{{煤鐵資源}}作後盾的機器驅動大規模生產。'
+                ]
+              },
+              {
+                heading: '🏛️ 政治、資本與技術背景',
+                points: [
+                  '政治社會：{{光榮革命}}後國會權力取代王權；17–18世紀國會推行「{{圈地法案}}」→ 推動新式農牧業累積資金，農民失地游離成為{{工業勞動力}}。',
+                  '資本市場：海外貿易累積資本、發達銀行金融業、18世紀人口大增、大規模修築內陸交通；英國盛產煤鐵羊毛，美洲殖民地產{{棉花}}。',
+                  '技術進步：17世紀中期成立「{{皇家學會}}」帶動科學風潮；政府頒發{{專利證書}}鼓勵發明。'
+                ]
+              },
+              {
+                heading: '🌍 工業革命的三期擴展',
+                points: [
+                  '第一期（18世紀）：{{英國}} → 第二期（19世紀前半）：{{比利時}}、{{法國}} → 第三期（19世紀後半）：{{德意志}}、俄國、奧匈帝國、義大利。',
+                  '歐陸以外擴張：{{美國}}（與歐洲互動多）與{{日本}}（{{明治維新}}後改革有成）。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '17至18世紀英國國會推行「圈地法案」，對後來工業革命最直接的兩項貢獻為何？',
+                options: ['廢除關稅並建立皇家學會', '累積農業資金並提供大批游離勞動力', '獲得美洲棉花與印度市場', '建立鐵路網並推動婦女參政'],
+                ans: 1,
+                exp: '圈地法案推動大規模新式農牧業累積資金，同時使農民失去土地游離出農村，成為工業發展必需的勞動力。'
+              },
+              {
+                q: '依據歐洲工業革命的三期擴展順序，下列哪一組國家屬於「第二期（19世紀前半期）」已工業化地帶？',
+                options: ['英國、愛爾蘭', '比利時、法國', '德意志、俄國', '西班牙、鄂圖曼帝國'],
+                ans: 1,
+                exp: '第一期為18世紀的英國；第二期為19世紀前半期的比利時與法國；第三期為19世紀後半期的德、俄、奧匈、義。'
+              }
+            ]
+          },
+          {
+            id: '1-2',
+            title: '工業化影響與資本主義演變',
+            subtitle: '都市化、大眾文化、商業→工業資本主義',
+            time: '6 分鐘',
+            cards: [
+              {
+                heading: '🏙️ 工業化的三大社會面貌改變',
+                points: [
+                  '1. {{都市化}}普及：19世紀歐洲城市人口大幅增加，占歐洲總人口{{一成以上}}。',
+                  '2. {{中產階級}}崛起與貧富不均：資本家與專業管理人才擁有財富卻缺政治地位→推動改革；勞工受剝削形成{{階級意識}}與集體對抗。',
+                  '3. {{大眾文化}}出現：機器生產標準化廉價商品；城市出現咖啡館、音樂廳、博物館（如梵谷1888〈{{夜晚露天咖啡座}}〉）；「晨間革命」使早餐普及，勞工喝{{加糖的茶}}配糖蜜麵包。'
+                ]
+              },
+              {
+                heading: '💰 商業資本主義（16–18世紀）',
+                points: [
+                  '資本主義以牟利為目的，保護{{私有財產}}、經濟自由與市場競爭。',
+                  '演變脈絡：中古後期銀行業 → {{合股公司}}分攤風險 → 交易所與股票市場（1602 {{阿姆斯特丹證券交易所}}）→ 政府發特許狀享專賣獨占的「{{特許公司}}」（如英國東印度公司）。'
+                ]
+              },
+              {
+                heading: '🏭 工業資本主義（18世紀中–19世紀中）',
+                points: [
+                  '資本家將資金投入工業擴大生產規模；為防範市場泡沫化危機，政府頒布「{{有限責任法}}」保障投資人利益。',
+                  '效果與影響：促使投資意願提高並刺激{{產業合併}}，一方面帶來新型態工作，另一方面也產生{{失業}}問題。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '工業資本主義時期，為因應資金大量投入與商品泡沫化危機，政府頒布何種法律以保障投資人並刺激產業合併？',
+                options: ['航海法', '圈地法案', '有限責任法', '專利保護法'],
+                ans: 2,
+                exp: '政府頒布「有限責任法」完善投資法規，使投資人更有意願投資並刺激產業合併。'
+              },
+              {
+                q: '1602年成立、促使商業活動邁向國際化的世界第一間證券交易所位於何處？',
+                options: ['倫敦', '阿姆斯特丹', '巴黎', '威尼斯'],
+                ans: 1,
+                exp: '1602年第一間證券交易所在荷蘭阿姆斯特丹成立，是商業資本主義的重要里程碑。'
+              }
+            ]
+          },
+          {
+            id: '1-3',
+            title: '社會主義與英國國會改革',
+            subtitle: '三大社會主義學派、憲章運動與1832–1928法案',
+            time: '6 分鐘',
+            cards: [
+              {
+                heading: '🚩 社會主義三大學派比較',
+                points: [
+                  '共同主張：因應勞資對立與貧富不均，主張廢除{{私有財產制}}，生產工具改為{{社會共有}}。',
+                  '{{烏托邦社會主義}}（19世紀前期，代表{{聖西門}}）：主張建立「公社」、「合作社」互助均富。',
+                  '{{馬克思社會主義}}（19世紀中期，代表{{馬克思}}）：主張{{暴力革命}}奪權，強調唯物辯證法、{{剩餘價值}}、階級鬥爭。',
+                  '{{費邊社會主義}}（19世紀後期，代表{{蕭伯納}}）：主張漸進溫和改革，提倡組織{{工黨}}、透過國會立法改善勞工待遇。'
+                ]
+              },
+              {
+                heading: '🗳️ 英國工人運動與國會改革年表',
+                points: [
+                  '{{憲章運動}}：中產與勞工推動，訴求取消參政財產限制、廢除{{衰敗市鎮}}重劃選區、實施{{祕密投票}}。',
+                  '{{1832年}}：廢衰敗市鎮名額重配給新興工業城市，{{中產階級}}受惠。',
+                  '{{1867年}}：放寬名額，{{工人}}受惠 → {{1884年}}：再放寬門檻，{{農民}}受惠。',
+                  '{{1918年}}：部分婦女獲選舉權（有年齡與財產限制）→ {{1928年}}：降低年齡並取消財產限制，擴大婦女參政權。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '下列哪一學派主張以「漸進溫和」方式，提倡組織工黨並透過國會立法來改善勞工待遇？',
+                options: ['烏托邦社會主義（聖西門）', '馬克思社會主義（馬克思）', '費邊社會主義（蕭伯納）', '重商主義'],
+                ans: 2,
+                exp: '19世紀後期的費邊社會主義（代表人物蕭伯納）反對暴力革命，主張溫和漸進、組工黨透過國會立法改革。'
+              },
+              {
+                q: '英國國會改革使各階層依序獲得選舉權的正確順序為何？',
+                options: ['中產階級(1832) → 工人(1867) → 農民(1884) → 婦女(1918/1928)', '工人(1832) → 中產階級(1867) → 婦女(1884) → 農民(1918)', '農民(1832) → 中產階級(1867) → 工人(1884) → 婦女(1928)', '中產階級(1832) → 農民(1867) → 工人(1884) → 婦女(1918)'],
+                ans: 0,
+                exp: '依序為：1832中產階級、1867工人、1884農民、1918部分婦女、1928擴大至更多婦女。'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'ch3',
+        label: '單元二｜第 3 章',
+        title: '伊斯蘭世界',
+        desc: '伊斯蘭興起與哈里發王朝、三大帝國與文化成就、十字軍與近代現代化變革',
+        color: 'amber',
+        nodes: [
+          {
+            id: '2-1',
+            title: '伊斯蘭興起與早期政權演變',
+            subtitle: '穆罕默德、正統哈里發→奧瑪雅→阿拔斯王朝',
+            time: '6 分鐘',
+            cards: [
+              {
+                heading: '☪️ 先知穆罕默德與教義',
+                points: [
+                  '{{穆罕默德}}生於{{麥加}}，行商接觸猶太教與基督教；天使傳達阿拉旨意宣揚一神信仰。',
+                  '{{622年}}「{{希吉拉}}」（聖遷）：因在麥加遭迫害，帶領信徒遷至{{麥地那}}。',
+                  '教義：《{{古蘭經}}》、遵行「{{五功}}」、禁食豬肉、不崇拜偶像，簡單平實融入生活；「{{吉哈德}}」指為正義目的努力奮鬥。'
+                ]
+              },
+              {
+                heading: '👑 早期政權演變脈絡',
+                points: [
+                  '{{正統哈里發}}（632–661）：烏瑪「{{推舉制}}」產生四位哈里發；征服埃及、敘利亞、兩河、波斯；{{阿拉伯文}}成帝國官方語言。',
+                  '{{奧瑪雅王朝}}（661–750）：內戰後建立，哈里發改「{{世襲制}}」，定都{{大馬士革}}，征服北非、西班牙、中亞；因實行{{阿拉伯化政策}}享特權，遭反對者與{{波斯人}}推翻。',
+                  '{{阿拔斯王朝}}（750–1258）：重用波斯官僚，定都{{巴格達}}，8–10世紀為「{{黃金時代}}」；10世紀後遭西班牙{{後奧瑪雅王朝}}與北非{{法提馬王朝}}挑戰；{{1258年}}亡於{{蒙古}}（但部分蒙古人皈依，勢力未消）。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '哪一個伊斯蘭政權將哈里發由原本的「推舉制」改為「世襲制」，定都大馬士革，卻因阿拉伯人享有特權而遭波斯人與反對者推翻？',
+                options: ['正統哈里發時期', '奧瑪雅王朝', '阿拔斯王朝', '法提馬王朝'],
+                ans: 1,
+                exp: '奧瑪雅王朝（661-750）首開哈里發世襲先例，定都大馬士革，因阿拉伯中心政策引發不滿而被推翻。'
+              },
+              {
+                q: '關於阿拔斯王朝的敘述，下列何者正確？',
+                options: ['定都大馬士革並排斥波斯官僚', '8至10世紀為伊斯蘭文明的黃金時代，定都巴格達', '1453年被鄂圖曼帝國消滅', '從未面臨其他伊斯蘭王朝的權威挑戰'],
+                ans: 1,
+                exp: '阿拔斯王朝定都巴格達、重用波斯人，8-10世紀為黃金時代；10世紀後面面臨後奧瑪雅與法提馬挑戰，1258年亡於蒙古。'
+              }
+            ]
+          },
+          {
+            id: '2-2',
+            title: '三大帝國、傳播與文化成就',
+            subtitle: '鄂圖曼/薩法維/蒙兀兒、跨區傳播、智慧宮與科技藝術',
+            time: '7 分鐘',
+            cards: [
+              {
+                heading: '🏰 16世紀伊斯蘭三大帝國並存',
+                points: [
+                  '{{鄂圖曼帝國}}（13世紀末奧斯曼建立）：{{1453年}}攻陷君士坦丁堡滅拜占庭，定都{{伊斯坦堡}}，橫跨歐亞非；訓練非穆斯林改信的「{{新軍}}」（Janissaries）成精銳武力與官僚來源。',
+                  '{{薩法維帝國}}（16世紀初伊朗）：以「{{什葉派}}」為國教以區別鄂圖曼；{{阿拔斯}}在位鼎盛，首都{{伊斯法罕}}建築華麗。',
+                  '{{蒙兀兒帝國}}（16世紀初蒙古後代北印度）：首都{{德里}}，{{阿克巴}}時期達巔峰，採{{宗教寬容}}政策、貿易發達。'
+                ]
+              },
+              {
+                heading: '🧭 商業與宗教傳布（鼓勵商業、宗教寬容）',
+                points: [
+                  '中國：7世紀經海陸絲路赴{{長安}}、{{廣州}}貿易；13–14世紀{{蒙古}}重用穆斯林官員促進傳播。',
+                  '東南亞：7世紀赴蘇門答臘通婚定居；15世紀穆斯林王國傳至印尼、馬來、菲南；16世紀葡占麻六甲仍持續擴張。',
+                  '印度與非洲：13世紀突厥人入北印建政權；非洲至今為信仰人數最多宗教，為讀古蘭經使{{阿拉伯語文}}成共通語（西非14世紀{{傑內大清真寺}}以泥土與棕櫚木建成、無圓頂）。'
+                ]
+              },
+              {
+                heading: '📜 燦爛的文化與科技成就',
+                points: [
+                  '阿拔斯王朝於巴格達設「{{智慧宮}}」推動「{{百年翻譯運動}}」，保存古希臘典籍助歐洲{{文藝復興}}。',
+                  '文學與科學：《{{一千零一夜}}》（9世紀巴格達）；數學創「{{代數}}」與{{阿拉伯數字}}；醫學開{{眼睛解剖學}}先河；天文學（{{比魯尼}}研究月球軌跡）。',
+                  '藝術與工藝：{{波斯細密畫}}（薩法維與蒙兀兒鼎盛）；外傳紙張、甘蔗、棉花、咖啡；巴格達玻璃絲綢、大馬士革鋼鐵織錦；清真寺具尖塔、圓頂、拱形結構與幾何植物紋。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '下列關於16世紀伊斯蘭三大帝國的配對，何者「完全正確」？',
+                options: ['鄂圖曼帝國—什葉派國教—伊斯法罕', '薩法維帝國—新軍制度—伊斯坦堡', '蒙兀兒帝國—阿克巴宗教寬容—德里', '薩法維帝國—1453年滅拜占庭—巴格達'],
+                ans: 2,
+                exp: '蒙兀兒帝國位於北印度，首都德里，阿克巴時期採宗教寬容達巔峰；鄂圖曼為新軍與伊斯坦堡；薩法維為什葉派與伊斯法罕。'
+              },
+              {
+                q: '阿拔斯王朝在巴格達設立哪一學術中心並推動百年翻譯運動，使古希臘典籍得以保存並助益後來歐洲文藝復興？',
+                options: ['皇家學會', '智慧宮', '愛資哈爾大學', '伊斯坦堡大學'],
+                ans: 1,
+                exp: '阿拔斯王朝在巴格達設立「智慧宮」，獎勵翻譯各文明經典，稱為百年翻譯運動。'
+              }
+            ]
+          },
+          {
+            id: '2-3',
+            title: '與西方互動及近代變革',
+            subtitle: '十字軍、三大帝國衰微、現代化改革、泛伊斯蘭與服飾議題',
+            time: '7 分鐘',
+            cards: [
+              {
+                heading: '⚔️ 十字軍運動與三大帝國衰微',
+                points: [
+                  '十字軍：8世紀{{法蘭克}}軍隊擋下穆斯林入歐；11世紀中{{塞爾柱土耳其}}控制阿拔斯、打擊拜占庭並阻基督徒朝聖→引發十字軍。影響：對伊斯蘭整體衝擊小，卻讓歐洲帶回醫學哲學知識奠定{{文藝復興}}基礎。',
+                  '三大帝國衰微：鄂圖曼{{1683年}}「{{維也納之戰}}」敗於波蘭與哈布斯堡聯軍由攻轉守、財政失衡與新軍成負擔；薩法維邊緣化遜尼派致分裂；蒙兀兒{{奧朗則布}}獨尊伊斯蘭激化對立。'
+                ]
+              },
+              {
+                heading: '🔧 近代現代化改革與泛伊斯蘭主義',
+                points: [
+                  '改革導火線：埃及總督{{穆罕默德·阿里}}改革並叛變→鄂圖曼{{1839年}}起推行改革（世俗公立學校/{{伊斯坦堡大學}}、徵兵制、法式官僚、世俗法、廢奴隸、各宗教公民平等）。',
+                  '{{泛伊斯蘭主義}}（19世紀後）：奠基者{{加馬爾丁·阿富汗尼}}倡團結全球穆斯林擁共同哈里發＋學西方科技抗列強；{{穆罕默德·阿布杜}}倡調和傳統與現代，透過埃及{{愛資哈爾大學}}傳播。'
+                ]
+              },
+              {
+                heading: '🌐 戰後三路線與穆斯林女性服飾',
+                points: [
+                  '一戰後鄂圖曼解體，反殖民民族主義興起，土耳其與伊朗現代化。',
+                  '二戰後三路線：{{保守派}}（依伊斯蘭教法，如沙烏地、塔利班阿富汗）、{{世俗派}}（西方標準，如土耳其）、{{折衷派}}（學特定科技「現代化而非西方化」，如{{穆斯林兄弟會}}）。',
+                  '女性服飾：{{布卡}}（全罩僅眼網窗，阿富汗）、{{尼卡伯}}（遮臉露雙眼，沙烏地）、喜瑪爾、恰多爾、{{喜加伯}}（最常見頭巾）；{{2010年法國}}禁公共場所全臉面紗引發信仰自由與公共安全爭議。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '1683年哪一場戰役的失利，使鄂圖曼帝國對歐洲諸國由攻勢轉為守勢，且隨後的軍備擴張導致財政失衡？',
+                options: ['君士坦丁堡之戰', '維也納之戰', '十字軍東征', '七年戰爭'],
+                ans: 1,
+                exp: '1683年鄂圖曼圍攻維也納遭波蘭與哈布斯堡聯軍擊退，自此由攻轉守、軍政日衰。'
+              },
+              {
+                q: '二戰後伊斯蘭知識分子提出三種變革路線，其中主張「學習特定西方科技、調和信仰與科學，達成現代化而非西方化」的代表是？',
+                options: ['保守派—沙烏地阿拉伯', '世俗派—土耳其', '折衷派—穆斯林兄弟會', '保守派—塔利班'],
+                ans: 2,
+                exp: '折衷派介於保守與世俗之間，標榜現代化而非西方化，代表為散居阿拉伯國家的穆斯林兄弟會。'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'ch4',
+        label: '單元三｜第 4 章',
+        title: '西方與近代世界',
+        desc: '大航海與重商主義、哥倫布大交換與白銀時代、中南美獨立與非洲大獵、亞太拓殖與白玫瑰',
+        color: 'indigo',
+        nodes: [
+          {
+            id: '3-1',
+            title: '大航海時代、重商主義與葡西荷英',
+            subtitle: '新航道開拓、重商主義與四大殖民帝國競爭',
+            time: '7 分鐘',
+            cards: [
+              {
+                heading: '⛵ 發現新航道',
+                points: [
+                  '背景：東向貿易受中間商與{{鄂圖曼帝國}}阻礙；{{1415年}}葡萄牙{{亨利親王}}贊助西非探險開啟大航海；加上香料需求、傳播基督教與航海技術提升。',
+                  '里程碑：1488 {{狄亞士}}發現好望角 → {{1492年}}{{哥倫布}}獲西班牙支持抵巴哈馬/加勒比海 → {{1498年}}葡人{{達伽馬}}繞好望角抵印度 → 1519–1522 {{麥哲倫}}進太平洋（於菲律賓遇害），船員完成首次{{環球航行}}。'
+                ]
+              },
+              {
+                heading: '⚖️ 帝國主義與重商主義',
+                points: [
+                  '16–18世紀歐洲奪取港口形成武裝港口貿易網絡。',
+                  '{{重商主義}}：堅信{{金銀儲存量}}代表國力，透過提高進口關稅保護本國商業、追求{{貿易順差}}以確保貴金屬流入。'
+                ]
+              },
+              {
+                heading: '🚩 葡、西、荷、英海外發展',
+                points: [
+                  '{{葡萄牙}}：最先建帝國，強收關稅控航線（{{麻六甲}}控南中國海到印度洋；{{澳門}}、{{長崎}}開中日貿易）。',
+                  '{{西班牙}}：深入內陸直接統治，{{1521年}}滅阿茲提克、{{1533年}}滅印加，美洲古文明瓦解。',
+                  '{{荷蘭}}：{{1602年}}聯合東印度公司（VOC），以{{巴達維亞}}壟斷{{香料群島}}（丁香、肉豆蔻）；{{1624年}}占臺灣作轉口中心。',
+                  '{{英國}}：1600東印度公司轉向印度；{{1651年}}起頒「{{航海法}}」禁荷船運貨，爆發荷英海上戰爭；建北美十三殖民地，擊敗荷蘭成新霸權。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '1651年起英國數度頒布「航海法」，禁止荷蘭船隻至英國殖民地運貨，這項措施直接引發了什麼結果？',
+                options: ['荷蘭放棄巴達維亞', '英荷兩國爆發多次海上戰爭', '西班牙失去美洲白銀', '葡萄牙退出澳門貿易'],
+                ans: 1,
+                exp: '航海法威脅荷蘭轉運經濟命脈，導致荷英爆發多次海上戰爭，最終英國擊敗荷蘭成為新的殖民強權。'
+              },
+              {
+                q: '關於葡萄牙與西班牙在16世紀的殖民策略差異，下列敘述何者正確？',
+                options: ['葡萄牙深入美洲內陸直接統治；西班牙僅在非洲收關稅', '葡萄牙以掌握港口收關稅控航線為主；西班牙在美洲深入內陸直接統治', '兩國皆以聯合東印度公司經營香料群島', '兩國皆未曾與亞洲進行貿易'],
+                ans: 1,
+                exp: '葡萄牙在亞非間控制港口強收關稅（如麻六甲、澳門）；西班牙則深入美洲內陸征服阿茲提克與印加，採直接統治。'
+              }
+            ]
+          },
+          {
+            id: '3-2',
+            title: '哥倫布大交換、三角貿易、白銀與文化交流',
+            subtitle: '物種流動、奴隸貿易、歐洲物價革命與中國風',
+            time: '6 分鐘',
+            cards: [
+              {
+                heading: '🌽 哥倫布大交換（1500年後）',
+                points: [
+                  '新大陸 → 舊大陸：{{馬鈴薯}}、{{番薯}}（助人口成長）、玉米、番茄、辣椒、{{菸草}}、可可豆、火雞、南瓜、鳳梨。',
+                  '舊大陸 → 新大陸：{{甘蔗}}、{{咖啡}}（種植園經濟）、牛羊馬豬（成強勢物種）、小麥、香蕉、葡萄，以及造成原住民浩劫的{{跨國疾病}}。'
+                ]
+              },
+              {
+                heading: '⛓️ 奴隸與三角貿易（16–19世紀）',
+                points: [
+                  '美洲原住民死於疾病與戰爭，殖民者轉向西非「{{奴隸海岸}}」購買黑奴（總計約{{1,252萬}}人，{{18世紀}}最高約649萬）。',
+                  '路線：歐洲（蘭姆酒、槍砲、布匹）→ 西非（奴隸）→ 美洲（熱帶作物、菸草、金銀）→ 歐洲；徹底改變中南美洲人口結構。'
+                ]
+              },
+              {
+                heading: '🪙 白銀時代與文化交流',
+                points: [
+                  '16世紀西班牙開採美洲白銀，17世紀經大西洋赴歐或經太平洋流向亞洲換取瓷器絲綢香料。',
+                  '{{歐洲物價革命}}：大量白銀流入引發{{通貨膨脹}} → 收固定田租的{{貴族}}衰微，經營貿易的{{中產階級（商人）}}崛起。',
+                  '文化交流：18世紀初茶、瓷器征服歐洲，英法流行「{{中國風}}」影響{{洛可可藝術}}；啟蒙學者{{伏爾泰}}讚美中國科舉制與宗教包容。19世紀前，亞洲文化對歐影響遠大於歐對亞。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '16至17世紀大量美洲白銀流入歐洲，加劇「歐洲物價革命」，這對歐洲社會階級造成何種影響？',
+                options: ['收固定田租的貴族實質收入增加而壯大', '收固定田租的貴族衰微，經營貿易的商人中產階級崛起', '農奴制度全面恢復', '歐洲完全停止向亞洲購買茶葉與瓷器'],
+                ans: 1,
+                exp: '通貨膨脹使領取固定田租的歐洲貴族實質收入減少而衰微，反觀經營香料、蔗糖貿易的商人致富，中產階級崛起。'
+              },
+              {
+                q: '下列哪一組物種皆屬於「由新大陸（美洲）傳入舊大陸（歐亞非）」的哥倫布大交換產物？',
+                options: ['甘蔗、咖啡、小麥', '馬鈴薯、番薯、菸草', '牛、羊、馬', '葡萄、香蕉、辣椒'],
+                ans: 1,
+                exp: '馬鈴薯、番薯、玉米、番茄、辣椒、菸草、可可豆、火雞等源自新大陸；甘蔗、咖啡、牛羊馬、小麥、葡萄源自舊大陸。'
+              }
+            ]
+          },
+          {
+            id: '3-3',
+            title: '中南美獨立、歐洲優越與非洲大獵',
+            subtitle: '克里奧爾人、門羅主義、社會達爾文與柏林會議',
+            time: '7 分鐘',
+            cards: [
+              {
+                heading: '🗽 中南美洲獨立運動與門羅主義',
+                points: [
+                  '背景：啟蒙思潮、美獨、法革影響，加上{{拿破崙}}進軍伊比利半島使母國控制力下降。',
+                  '社會階級：半島人（歐洲人掌政治特權）＞ {{克里奧爾人}}（當地出生歐裔，享經濟特權，為{{獨立運動推動者}}）＞ 麥士蒂索人（混血）＞ 印第安人與黑人。',
+                  '人物與獨立：1804{{海地}}、1821墨西哥；南美解放者{{西蒙·玻利瓦爾}}（委內瑞拉）、{{荷西·德·聖馬丁}}（阿根廷）；獨立後廢奴、克里奧爾人掌權，但經濟仍高度依賴西方。',
+                  '{{1823年門羅主義}}：防奧相{{梅特涅}}等保守勢力干預，美國聲明「{{美洲人的美洲}}」（對歐採{{孤立主義}}）；{{英國}}為打入中南美市場而與美合作。'
+                ]
+              },
+              {
+                heading: '🧠 歐洲優越意識與非洲大獵',
+                points: [
+                  '1800前後歐洲對亞洲轉為負面；1860年代流行「{{社會達爾文主義}}」（適者生存），英作家吉卜林《{{白人的負擔}}》宣稱白人有責任教化有色民族。',
+                  '非洲大獵契機：撒哈拉以南原稱「黑暗大陸」；{{1850年}}{{奎寧}}證實可治瘧疾＋工業革命需求＋英人{{李文斯頓}}探險著作掀起熱潮。比利時王{{利奧波德二世}}在剛果以暴虐手段榨取「{{血橡膠}}」。',
+                  '{{1884年柏林會議}}：德相{{俾斯麥}}召開協調瓜分非洲（英縱向、法橫向貫穿；人為邊界成日後動盪根源）。一戰前僅{{衣索比亞}}（敗義大利）與{{賴比瑞亞}}（美扶持）維持獨立。統治方式由早期{{特許公司}}轉為20世紀初{{政府直接統治}}。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '中南美洲獨立運動主要由哪一社會階級所推動？他們在當地出生、享有經濟特權，卻不滿統治權分配不均。',
+                options: ['半島人（Peninsulars）', '克里奧爾人（Creoles）', '麥士蒂索人（Mestizos）', '非洲黑奴'],
+                ans: 1,
+                exp: '半島人掌握政治特權；克里奧爾人是在當地出生的歐洲後裔，多為地主與企業家，成為獨立運動的主要推動者。'
+              },
+              {
+                q: '1884年柏林會議後非洲幾乎被瓜分殆盡，一戰前非洲僅存哪兩個維持獨立的國家？',
+                options: ['埃及與南非聯邦', '衣索比亞與賴比瑞亞', '剛果與阿爾及利亞', '摩洛哥與蘇丹'],
+                ans: 1,
+                exp: '衣索比亞擊敗義大利、賴比瑞亞由美國扶持，是當時非洲僅存的兩個獨立國家。'
+              }
+            ]
+          },
+          {
+            id: '3-4',
+            title: '亞太拓殖與「白玫瑰」民主省思',
+            subtitle: '英屬印度、東南亞與暹羅、俄擴中亞、太平洋與白玫瑰組織',
+            time: '6 分鐘',
+            cards: [
+              {
+                heading: '🌏 歐洲人在印度、東南亞與中亞',
+                points: [
+                  '英屬印度：1763七年戰爭法國放棄；{{1858年}}英政府廢東印度公司改{{直接統治}}。經濟：種茶葉咖啡鴉片、建鐵路電報，透過{{不對稱貿易}}使財富外流；社會：西式教育菁英反成印度民族主義領袖，並禁寡婦自焚殉夫「{{娑提}}」（sati）。',
+                  '東南亞：英1824建新加坡、占馬來亞（橡膠、錫）、1880年代占緬甸（柚木、紅寶石）；法占中南半島（越、寮、柬）；{{暹羅（泰國）}}因處英法緩衝區＋國王{{拉瑪五世（朱拉隆功）}}推動中央集權與西化改革，成為東南亞唯一未遭殖民國家。',
+                  '俄羅斯擴張中亞：主要動機為{{領土與暖水港}}（市場原料次要）；19世紀下半葉併入大部分中亞，至{{1991年}}蘇聯解體才獨立。'
+                ]
+              },
+              {
+                heading: '🏝️ 太平洋拓殖與「白玫瑰」省思',
+                points: [
+                  '太平洋：16世紀澳紐建定居殖民地；19世紀初成蒸汽船補給站與海軍港（法屬大溪地、英屬斐濟）；19世紀末直接統治；{{夏威夷王國}}1898年併入美國；{{東加王國}}尋求英國保護維持獨立。',
+                  '課後活動「{{白玫瑰}}」：二戰納粹極權下，{{慕尼黑大學}}師生（漢斯與索菲亞·{{蕭爾}}兄妹、波普斯特等）組成非暴力反抗組織，1942–1943散發6份傳單反抗希特勒與中央集權，1943年遭人民法院判處死刑；搭配詩人福萊德〈發生了什麼事〉，省思啟蒙民主理想與20世紀極權現實的落差。'
+                ]
+              }
+            ],
+            quiz: [
+              {
+                q: '19世紀末東南亞唯一未遭歐洲列強殖民的國家是暹羅（泰國），其成功維持獨立的兩大關鍵因素為何？',
+                options: ['盛產橡膠並與美國結盟', '位處英法緩衝區，且國王拉瑪五世推動中央集權與西化改革', '氣候酷熱且瘧疾盛行', '曾擊敗英國與法國聯軍'],
+                ans: 1,
+                exp: '暹羅正好位於英屬緬甸與法屬中南半島之間的緩衝位置，加上國王拉瑪五世朱拉隆功積極推動現代化改革而保住獨立。'
+              },
+              {
+                q: '二戰期間在納粹德國境內散發 6 份傳單、呼籲反抗希特勒極權並反對空洞口號教育的「白玫瑰」組織，主要由哪一族群組成？',
+                options: ['柏林工廠的馬克思主義工人', '慕尼黑大學的教授與學生', '被俘虜的盟軍軍官', '逃亡英國的法國流亡政府'],
+                ans: 1,
+                exp: '白玫瑰是由慕尼黑大學師生（如蕭爾兄妹與波普斯特等）籌組的非暴力反抗組織，1943年遭納粹人民法院判處死刑。'
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+    /* ============================================================
+       2. 36 張高頻段考閃卡資料 (每章 12 張)
+    ============================================================ */
+    const FLASHCARDS = [
+      // 第 2 章 (12 張)
+      { id: 'fc1', unit: 'ch2', front: '工業革命始於何時何地？五大開展要素？', back: '18世紀後半葉的英國。要素：大量勞動力、充沛資金、無關稅流通管道、廣大市場、煤鐵資源作後盾的機器大規模生產。', tip: '常考「為何英國最先發生工業革命」之背景題。' },
+      { id: 'fc2', unit: 'ch2', front: '英國「圈地法案」對工業革命的雙重影響？', back: '1. 推動大規模新式農牧業，累積資金。\n2. 農民失去土地游離出農村，提供工業發展必需的勞動力。', tip: '17-18世紀由土地貴族與地主掌控的國會推行。' },
+      { id: 'fc3', unit: 'ch2', front: '17世紀中期英國成立哪一機構帶動科學風潮？政府如何鼓勵發明？', back: '成立「皇家學會」帶動科學研究風潮；政府頒發「專利證書」保障並鼓勵技術發明人。', tip: '屬於英國技術進步的制度推力。' },
+      { id: 'fc4', unit: 'ch2', front: '歐洲工業革命的「三期擴展」與歐陸外兩國？', back: '第一期（18世紀）：英國\n第二期（19世紀前半）：比利時、法國\n第三期（19世紀後半）：德意志、俄國、奧匈、義大利\n歐陸外：美國、日本（明治維新）。', tip: '注意比利時與法國早於德國！' },
+      { id: 'fc5', unit: 'ch2', front: '1888年梵谷〈夜晚露天咖啡座〉與「晨間革命」反映什麼歷史現象？', back: '工業化帶來「大眾文化」普及（咖啡館走入尋常生活）與作息固定化，原屬貴族的早餐普及大眾，且糖、咖啡原料取自全球殖民地。', tip: '課本 P.64 與 P.68 課後活動重要情境考點。' },
+      { id: 'fc6', unit: 'ch2', front: '1602年成立的世界第一間證券交易所位於哪裡？', back: '荷蘭阿姆斯特丹（阿姆斯特丹證券交易所），促使商業活動邁向國際化。', tip: '同年（1602）荷蘭也成立聯合東印度公司（VOC）。' },
+      { id: 'fc7', unit: 'ch2', front: '商業資本主義的「特許公司」有何特徵？舉例說明。', back: '向政府申請特許狀，取得某地專賣獨占權以增加投資誘因，例如英國東印度公司、荷蘭聯合東印度公司。', tip: '盛行於16到18世紀末。' },
+      { id: 'fc8', unit: 'ch2', front: '工業資本主義時期頒布「有限責任法」的背景與效果？', back: '背景：資金大量投入導致市場商品泡沫化危機叢生。\n效果：保障投資人利益、提高投資意願、刺激各產業機構進行合併。', tip: '合併帶來新工作機會，同時也造成失業問題。' },
+      { id: 'fc9', unit: 'ch2', front: '烏托邦社會主義的時代、代表人物與主張？', back: '19世紀前期，代表人物「聖西門」。主張建立「公社」、「合作社」等社會組織，使眾人經濟互助達均富。', tip: '對比馬克思（暴力）與費邊（議會立法）。' },
+      { id: 'fc10', unit: 'ch2', front: '馬克思社會主義的時代與四大關鍵詞？', back: '19世紀中期。關鍵詞：暴力革命奪權、唯物辯證法、剩餘價值、階級鬥爭。', tip: '主張廢除私有財產制、生產工具社會共有。' },
+      { id: 'fc11', unit: 'ch2', front: '費邊社會主義的時代、代表人物與主張？', back: '19世紀後期，代表人物「蕭伯納」。主張以漸進溫和方式改善勞工待遇，提倡組織工黨、透過國會立法改革。', tip: '英國工黨的重要思想淵源。' },
+      { id: 'fc12', unit: 'ch2', front: '英國「憲章運動」訴求與 1832–1928 國會改革受惠順序？', back: '憲章運動：取消財產限制、廢衰敗市鎮重劃選區、祕密投票。\n改革順序：1832中產階級→1867工人→1884農民→1918部分婦女→1928擴大婦女（取消財產限制）。', tip: '「衰敗市鎮」指沒落卻仍保有國會席次的舊城鎮。' },
+
+      // 第 3 章 (12 張)
+      { id: 'fc13', unit: 'ch3', front: '什麼是「希吉拉（聖遷）」與「吉哈德」？', back: '希吉拉：622年穆罕默德在麥加遭迫害，率信徒遷至麥地那。\n吉哈德：穆斯林為正義目的而努力奮鬥的行為。', tip: '古蘭經教義簡單平實，須遵行「五功」、禁食豬肉、不拜偶像。' },
+      { id: 'fc14', unit: 'ch3', front: '「正統哈里發」時期的產生方式與三大影響？', back: '632–661年由烏瑪「推舉制」產生四位哈里發。\n影響：伊斯蘭成主流宗教、穆斯林帝國形成、阿拉伯文成帝國官方語言。', tip: '征服埃及、敘利亞、兩河流域、波斯。' },
+      { id: 'fc15', unit: 'ch3', front: '奧瑪雅王朝（661–750）的首都、制度變革與滅亡原因？', back: '定都大馬士革；哈里發改「世襲制」；征服北非、西班牙、中亞。因實行阿拉伯化政策讓阿拉伯人享特權，遭反對者與波斯人推翻。', tip: '對比阿拔斯王朝重用波斯官僚。' },
+      { id: 'fc16', unit: 'ch3', front: '阿拔斯王朝（750–1258）的首都、黃金時代與滅亡？', back: '定都巴格達，8–10世紀為「黃金時代」；10世紀後面臨西班牙後奧瑪雅與北非法提馬挑戰；1258年亡於蒙古。', tip: '部分蒙古人後來皈依伊斯蘭，勢力未消退。' },
+      { id: 'fc17', unit: 'ch3', front: '鄂圖曼帝國的「新軍（Janissaries）」是什麼制度？', back: '成員多來自新征服地區的非穆斯林，接受穆斯林教育、改信伊斯蘭、效忠蘇丹；不僅是精銳武力，也是蘇丹派任官僚的來源。', tip: '1453年鄂圖曼攻陷君士坦丁堡滅拜占庭，但新軍到18世紀反成財政負擔。' },
+      { id: 'fc18', unit: 'ch3', front: '薩法維帝國（伊朗）的官方宗派與鼎盛首都？', back: '以「什葉派」為官方宗教（藉此區別鄂圖曼）；阿拔斯時期鼎盛，首都「伊斯法罕」以華麗建築群聞名。', tip: '後期因邊緣化遜尼派與王位之爭而四分五裂。' },
+      { id: 'fc19', unit: 'ch3', front: '蒙兀兒帝國（北印度）巔峰君主與衰微轉折君主？', back: '阿克巴時期達巔峰（宗教寬容、對外貿易發達）；奧朗則布改採獨尊伊斯蘭政策，激化與印度教徒對立而由盛轉衰。', tip: '首都德里，與薩法維同為波斯細密畫高度發展之地。' },
+      { id: 'fc20', unit: 'ch3', front: '西非「傑內大清真寺」的建築特色為何？', back: '14世紀所建，融入非洲風格，沒有常見的圓頂；未用磚瓦，僅以泥土和棕櫚木建成，每年須修補外牆。', tip: '展現伊斯蘭建築的在地化特色。' },
+      { id: 'fc21', unit: 'ch3', front: '「智慧宮」與「百年翻譯運動」的歷史意義？', back: '阿拔斯王朝在巴格達設智慧宮，獎勵翻譯各文明經典，使古希臘哲學科學典籍在歐洲戰亂中得以保存，助益後來歐洲文藝復興。', tip: '同時期代表成就：代數、眼睛解剖學、比魯尼天文學、一千零一夜。' },
+      { id: 'fc22', unit: 'ch3', front: '十字軍運動的導火線與對歐、伊雙方的不同影響？', back: '導火線：11世紀中塞爾柱土耳其打擊拜占庭並阻基督徒赴耶路撒冷朝聖。\n影響：對伊斯蘭整體衝擊小；歐洲帶回穆斯林醫學哲學等知識，奠定文藝復興基礎。', tip: '8世紀則是法蘭克軍隊擋下穆斯林入侵歐洲。' },
+      { id: 'fc23', unit: 'ch3', front: '19世紀「泛伊斯蘭主義」兩大代表人物與主張差異？', back: '加馬爾丁·阿富汗尼（奠基者）：擁共同哈里發團結全球穆斯林＋學西方科技抗列強。\n穆罕默德·阿布杜：和平漸進調和傳統與現代，透過埃及愛資哈爾大學傳播。', tip: '鄂圖曼1839年現代化改革的導火線則是埃及總督穆罕默德·阿里叛變。' },
+      { id: 'fc24', unit: 'ch3', front: '二戰後伊斯蘭變革「三路線」與常見女性服飾區別？', back: '三路線：保守派（沙烏地/塔利班）、世俗派（土耳其）、折衷派（穆斯林兄弟會「現代化而非西方化」）。\n服飾：布卡（全罩眼網窗）、尼卡伯（遮臉露雙眼）、喜加伯（最常見頭巾）。', tip: '2010年法國禁公共場所全臉面紗引發信仰自由與公安爭議。' },
+
+      // 第 4 章 (12 張)
+      { id: 'fc25', unit: 'ch4', front: '大航海時代的四位關鍵航海家與年代成就？', back: '1488 狄亞士（好望角）\n1492 哥倫布（巴哈馬/美洲）\n1498 達伽馬（繞好望角抵印度）\n1519–1522 麥哲倫船隊（首次環球航行，本人於菲律賓遇害）。', tip: '1415年葡萄牙亨利親王贊助西非探險為開端。' },
+      { id: 'fc26', unit: 'ch4', front: '什麼是「重商主義（Mercantilism）」？', back: '16–18世紀歐洲經濟政策，堅信金銀儲存量代表國力，透過提高進口關稅保護本國商業、追求貿易順差以累積貴金屬。', tip: '帝國主義＋重商主義促使歐洲積極發展國際貿易。' },
+      { id: 'fc27', unit: 'ch4', front: '葡、西、荷、英四國在亞洲與美洲的代表據點？', back: '葡：麻六甲、澳門、長崎（控港收稅）\n西：墨西哥、秘魯（滅阿茲提克與印加、直統）\n荷：巴達維亞、香料群島、1624臺灣\n英：印度、北美十三殖民地（1651航海法敗荷）。', tip: '香料群島盛產丁香與肉豆蔻。' },
+      { id: 'fc28', unit: 'ch4', front: '哥倫布大交換中，新大陸與舊大陸各自輸出的代表物種？', back: '新→舊：馬鈴薯、番薯（助人口成長）、玉米、番茄、辣椒、菸草、可可豆、火雞。\n舊→新：甘蔗、咖啡、牛羊馬豬、小麥、香蕉、葡萄、跨國疾病。', tip: '疾病造成美洲原住民毀滅性浩劫，進而引發黑奴貿易。' },
+      { id: 'fc29', unit: 'ch4', front: '16–19世紀「三角貿易」的流向與高峰世紀？', back: '歐洲（蘭姆酒、槍砲、布匹）→ 西非奴隸海岸（黑奴）→ 美洲（熱帶作物、菸草、金銀）→ 歐洲。\n總計約1,252萬奴隸，以「18世紀（約649萬）」最高。', tip: '徹底改變中南美洲人口結構（非裔與混血大增）。' },
+      { id: 'fc30', unit: 'ch4', front: '什麼是「白銀時代」與「歐洲物價革命」？', back: '16–17世紀美洲白銀大量流入歐洲（並換取亞洲瓷器絲綢）引發通貨膨脹，使收固定田租的貴族衰微，經營貿易的商人中產階級崛起。', tip: '白銀亦經太平洋運往東南亞流向亞洲市場。' },
+      { id: 'fc31', unit: 'ch4', front: '18世紀歐洲「中國風」與啟蒙學者的態度？', back: '茶葉、瓷器、絲綢征服歐洲市場，英法流行「中國風」影響洛可可藝術；伏爾泰讚美中國科舉制與宗教包容。19世紀前亞洲對歐文化影響大於歐對亞。', tip: '直到1800年前後歐洲優越意識興起才轉為負面。' },
+      { id: 'fc32', unit: 'ch4', front: '中南美洲獨立的社會階級結構與兩大南美解放者？', back: '階級：半島人（政治特權）＞克里奧爾人（經濟特權、獨立推動者）＞麥士蒂索人＞印第安與黑人。\n解放者：西蒙·玻利瓦爾（委內瑞拉）、荷西·德·聖馬丁（阿根廷）。', tip: '獨立後廢除奴隸制，但經濟仍高度依賴西方。' },
+      { id: 'fc33', unit: 'ch4', front: '1823年「門羅主義」的背景、內容與英國的態度？', back: '防奧國梅特涅保守勢力干預，美總統門羅聲明「美洲人的美洲」（對歐孤立主義）。英國為打入西葡壟斷市場而選擇與美合作。', tip: '1830年代前中南美洲多數國家陸續完成獨立。' },
+      { id: 'fc34', unit: 'ch4', front: '「非洲大獵」的契機、柏林會議與僅存獨立國？', back: '契機：1850奎寧治瘧疾＋工業需求＋李文斯頓著作。\n1884德相俾斯麥召開柏林會議（英縱法橫、比利時利奧波德二世剛果血橡膠）。\n一戰前僅衣索比亞、賴比瑞亞獨立。', tip: '人為劃定邊界無視原始族群，成日後非洲動盪根源。' },
+      { id: 'fc35', unit: 'ch4', front: '英屬印度的經濟剝削與社會變革（娑提、菁英）？', back: '1858年英政府廢東印度公司直接統治。經濟上建鐵路電報行不對稱貿易致財富外流；社會上禁寡婦自焚「娑提」，西式教育菁英反成民族主義領袖。', tip: '1763年七年戰爭後法國退出印度，由英國獨霸。' },
+      { id: 'fc36', unit: 'ch4', front: '亞洲與太平洋維持獨立的國家？以及「白玫瑰」是什麼？', back: '獨立國：暹羅（緩衝區＋拉瑪五世改革）、東加王國（受英保護）。俄擴中亞求領土與暖水港。\n白玫瑰：二戰慕尼黑大學師生（蕭爾兄妹等）反抗納粹的非暴力組織，1943年遭判死刑。', tip: '夏威夷王國於1898年併入美國。' }
+    ];
+
+    /* ============================================================
+       3. 30 題高品質段考刷題題庫 (每章 10 題)
+    ============================================================ */
+    const QUIZ_BANK = [
+      // 第 2 章 (10 題)
+      {
+        id: 'q1', unit: 'ch2', type: '因果題',
+        q: '17至18世紀英國國會由土地貴族與地主掌控並推行「圈地法案」，這項法案對英國率先發生工業革命的關鍵影響為何？',
+        options: ['使王權重新凌駕於國會之上，集中資源建工廠', '推動新式農牧業累積資金，並迫使失地農民轉為工業勞動力', '促使英國放棄海外殖民地，專注發展本土農業', '直接促使英國在18世紀就實施了全面婦女參政權'],
+        ans: 1,
+        exp: '圈地法案使大規模新式農牧業得以發展並累積資金，同時讓農民失去土地游離出農村，成為工業所需的大量勞動力。'
+      },
+      {
+        id: 'q2', unit: 'ch2', type: '史料情境',
+        q: '1850年代的歐洲鐵路網地圖顯示，某一國家境內的鐵路密度遠高於歐洲大陸其他地區，且盛產煤鐵與羊毛，同時從北美殖民地輸入大量棉花。該國應是下列何者？',
+        options: ['法國', '德意志', '不列顛王國（英國）', '俄羅斯帝國'],
+        ans: 2,
+        exp: '英國是工業革命第一期發源地，1850年代境內已有最密集的鐵路網，並具備煤鐵羊毛與北美棉花等原料優勢。'
+      },
+      {
+        id: 'q3', unit: 'ch2', type: '時序比較',
+        q: '關於工業革命在歐亞美的擴展進程，下列敘述何者「正確」？',
+        options: ['19世紀前半期（第二期）率先跟進英國工業化的是比利時與法國', '俄羅斯與義大利比法國更早完成工業化', '日本在17世紀鎖國時期便已完成工業革命', '德意志在18世紀後半葉與英國同時展開工業革命'],
+        ans: 0,
+        exp: '工業革命第一期（18世紀）為英國；第二期（19世紀前半）為比利時、法國；第三期（19世紀後半）為德、俄、奧匈、義；日本為明治維新後。'
+      },
+      {
+        id: 'q4', unit: 'ch2', type: '文化現象',
+        q: '課本引用梵谷1888年名畫〈夜晚露天咖啡座〉，並介紹工業化後的「晨間革命」（勞工喝加糖的茶配糖蜜麵包）。這兩項史料共同反映了什麼歷史變遷？',
+        options: ['歐洲貴族徹底禁止平民飲用咖啡與茶', '原本屬於貴族的消費與飲食文化走向大眾化，且與全球殖民貿易緊密相連', '歐洲本土大量種植蔗糖與咖啡以供應工廠勞工', '工業革命導致所有歐洲城市人口大幅減少'],
+        ans: 1,
+        exp: '工業化帶來都市化與大眾文化，原本屬於貴族的咖啡與早餐普及大眾；而糖與咖啡皆非歐洲主產，反映全球貿易與殖民地供應。'
+      },
+      {
+        id: 'q5', unit: 'ch2', type: '概念區辨',
+        q: '比較「商業資本主義（16–18世紀）」與「工業資本主義（18世紀中以後）」，下列何者屬於「商業資本主義」時期的典型產物？',
+        options: ['政府頒布有限責任法以防泡沫化', '科學研發與職業教育緊密結合', '1602年阿姆斯特丹證券交易所與特許公司的成立', '大型工廠合併並引發大規模工業失業'],
+        ans: 2,
+        exp: '商業資本主義時期興起合股公司、1602年阿姆斯特丹證券交易所與享有專賣獨占權的特許公司；有限責任法與產業合併則屬工業資本主義。'
+      },
+      {
+        id: 'q6', unit: 'ch2', type: '經濟制度',
+        q: '工業資本主義發展過程中，市場上資金大量投入、人們蜂擁逐利，導致商品泡沫化危機叢生。各國政府為解決此問題並鼓勵投資，最代表性的立法措施是？',
+        options: ['航海法', '有限責任法', '圈地法案', '重商關稅法'],
+        ans: 1,
+        exp: '政府頒布「有限責任法」保障投資人利益，使法規漸趨完善、提高投資意願並刺激產業合併。'
+      },
+      {
+        id: 'q7', unit: 'ch2', type: '學派比較',
+        q: '一位19世紀後期的英國知識分子主張：「我們不應透過流血暴力奪取政權，而應以漸進溫和的方式，組織工黨並透過國會立法來改善勞工待遇。」他最可能屬於哪一學派？',
+        options: ['烏托邦社會主義', '馬克思社會主義', '費邊社會主義', '商業資本主義'],
+        ans: 2,
+        exp: '19世紀後期的費邊社會主義（代表蕭伯納）主張溫和漸進、組工黨並透過國會立法改革。'
+      },
+      {
+        id: 'q8', unit: 'ch2', type: '人物主張',
+        q: '下列哪一組「社會主義學派—代表人物—核心主張」的配對完全正確？',
+        options: ['烏托邦社會主義—聖西門—建立公社與合作社互助均富', '馬克思社會主義—蕭伯納—唯物辯證法與剩餘價值', '費邊社會主義—馬克思—暴力革命與階級鬥爭', '烏托邦社會主義—伏爾泰—廢除衰敗市鎮'],
+        ans: 0,
+        exp: '聖西門為烏托邦社會主義代表，主張公社與合作社；馬克思主張暴力革命、唯物辯證法、剩餘價值、階級鬥爭；蕭伯納屬費邊社會主義。'
+      },
+      {
+        id: 'q9', unit: 'ch2', type: '政治改革',
+        q: '19世紀英國「憲章運動」極力反對「衰敗市鎮（Rotten Boroughs）制度」，這項制度之所以遭到改革派猛烈抨擊的主因為何？',
+        options: ['這些市鎮工廠林立卻沒有半個國會席次', '這些市鎮曾是大城但在工業革命後沒落，卻仍保留原有國會席次導致分配不公', '這些市鎮規定只有女性才能投票', '這些市鎮拒絕繳納航海法關稅'],
+        ans: 1,
+        exp: '衰敗市鎮人口已沒落卻仍享有國會席次，反觀新興工業城市代表不足，因此1832年改革法案將其名額重新分配給新興工業城市。'
+      },
+      {
+        id: 'q10', unit: 'ch2', type: '年表順序',
+        q: '關於英國國會改革法案與選舉權擴大的配對，下列何者「錯誤」？',
+        options: ['1832年—中產階級受惠', '1867年—工人受惠', '1884年—農民受惠', '1918年—全面取消女性投票的年齡與財產限制'],
+        ans: 3,
+        exp: '1918年僅部分婦女獲選舉權，仍有年齡與財產限制；直到「1928年」才降低年齡並取消財產限制，擴大婦女選舉權。'
+      },
+
+      // 第 3 章 (10 題)
+      {
+        id: 'q11', unit: 'ch3', type: '名詞理解',
+        q: '西元622年，先知穆罕默德因在麥加傳教遭統治者迫害，率領信徒遷往麥地那。這段歷史在伊斯蘭史上被稱為什麼？',
+        options: ['吉哈德', '希吉拉（聖遷）', '五功', '烏瑪'],
+        ans: 1,
+        exp: '622年穆罕默德率信徒從麥加遷至麥地那稱為「希吉拉（聖遷）」；吉哈德指為正義目的努力奮鬥；烏瑪指穆斯林社群。'
+      },
+      {
+        id: 'q12', unit: 'ch3', type: '政權比較',
+        q: '比較「奧瑪雅王朝」與「阿拔斯王朝」的統治政策，下列敘述何者正確？',
+        options: ['奧瑪雅王朝重用波斯人；阿拔斯王朝獨尊阿拉伯人', '奧瑪雅定都巴格達；阿拔斯定都大馬士革', '奧瑪雅實行阿拉伯中心政策引發不滿；阿拔斯重用波斯官僚並將重心東移', '兩者皆維持正統哈里發時期的「推舉制」'],
+        ans: 2,
+        exp: '奧瑪雅定都大馬士革、改世襲制、行阿拉伯化特權；阿拔斯推翻奧瑪雅後定都巴格達、重用波斯官僚，開創黃金時代。'
+      },
+      {
+        id: 'q13', unit: 'ch3', type: '歷史事件',
+        q: '西元1258年，延續五百年的阿拔斯王朝最終亡於哪一股外來勢力之手，使哈里發不再是伊斯蘭世界的主要政治中心？',
+        options: ['十字軍', '蒙古人', '拜占庭帝國', '法蘭克王國'],
+        ans: 1,
+        exp: '1258年蒙古人消滅阿拔斯王朝，但隨後部分蒙古人皈依伊斯蘭，使伊斯蘭世界勢力並未消退。'
+      },
+      {
+        id: 'q14', unit: 'ch3', type: '帝國制度',
+        q: '16世紀伊斯蘭三大帝國中，哪一帝國運用「新軍（Janissaries）」制度，挑選新征服地區的非穆斯林改信受訓，使其成為效忠蘇丹的精銳武力與官僚來源？',
+        options: ['鄂圖曼帝國', '薩法維帝國', '蒙兀兒帝國', '法提馬王朝'],
+        ans: 0,
+        exp: '鄂圖曼帝國建立新軍制度，在1453年滅拜占庭後橫跨歐亞非；但到18世紀新軍反成為帝國的財政負擔。'
+      },
+      {
+        id: 'q15', unit: 'ch3', type: '宗教政策',
+        q: '16世紀初建立於現今伊朗一帶，並刻意以「什葉派」為官方宗教以與鄂圖曼帝國區隔，且首都伊斯法罕以華麗建築聞名的是哪一帝國？',
+        options: ['阿拔斯王朝', '薩法維帝國', '蒙兀兒帝國', '後奧瑪雅王朝'],
+        ans: 1,
+        exp: '薩法維帝國定什葉派為國教，使什葉派逐漸集中於伊朗，阿拔斯時期首都伊斯法罕最為鼎盛。'
+      },
+      {
+        id: 'q16', unit: 'ch3', type: '文化傳播',
+        q: '關於伊斯蘭文化與宗教在世界各地的傳布，下列哪一項描述「符合史實」？',
+        options: ['16世紀初葡萄牙人征服麻六甲後，伊斯蘭在東南亞隨即絕跡', '非洲穆斯林為閱讀古蘭經而學習阿拉伯語文，使其成為許多非洲族群的共通語', '西非傑內大清真寺以大量大理石圓頂與彩色磚瓦聞名', '蒙古人統治中國期間嚴禁穆斯林擔任行政與軍事官員'],
+        ans: 1,
+        exp: 'A 葡占麻六甲後伊斯蘭仍持續擴張；C 傑內大清真寺無圓頂、以泥土棕櫚木建成；D 蒙古重用穆斯林官員。故僅 B 正確。'
+      },
+      {
+        id: 'q17', unit: 'ch3', type: '文化成就',
+        q: '阿拔斯王朝黃金時代在巴格達設立「智慧宮」推動百年翻譯運動。下列哪一項「不屬於」中古伊斯蘭世界的文化科技成就？',
+        options: ['系統化整理幾何與進位制，創造「代數」', '開研究眼睛解剖學先河，並有比魯尼研究月球軌跡', '透過商貿將紙張、甘蔗、棉花、咖啡外傳至世界各地', '發明蒸汽機並於12世紀率先展開工業革命'],
+        ans: 3,
+        exp: '蒸汽機與工業革命屬於18世紀後半葉的英國；前三項皆為課本列舉的伊斯蘭重要文化與科技成就。'
+      },
+      {
+        id: 'q18', unit: 'ch3', type: '歐伊互動',
+        q: '11世紀中葉引發歐洲「十字軍運動」的直接導火線為何？其對歐洲最深遠的影響又是什麼？',
+        options: ['鄂圖曼攻打維也納；促使歐洲走向鎖國', '塞爾柱土耳其打擊拜占庭並阻基督徒赴耶路撒冷朝聖；歐洲帶回穆斯林知識奠定文藝復興基礎', '阿拔斯王朝消滅法蘭克王國；促使歐洲廢除教宗制度', '薩法維帝國入侵西班牙；促使歐洲發動宗教改革'],
+        ans: 1,
+        exp: '塞爾柱土耳其崛起打擊拜占庭並阻礙朝聖，拜占庭向教宗求援引發十字軍；歐洲見識穆斯林文明優勢，帶回醫學哲學知識奠定文藝復興基礎。'
+      },
+      {
+        id: 'q19', unit: 'ch3', type: '近代改革',
+        q: '19世紀鄂圖曼帝國推動現代化改革（1839年起設立世俗公立學校、徵兵制、法式官僚、廢奴隸制），促使帝國下定決心啟動這波改革的「導火線」事件為何？',
+        options: ['埃及總督穆罕默德·阿里推行現代化改革並入侵敘利亞背叛鄂圖曼', '波斯薩法維帝國攻陷伊斯坦堡', '第一次世界大戰鄂圖曼戰敗解體', '穆斯林兄弟會發動政變'],
+        ans: 0,
+        exp: '埃及總督穆罕默德·阿里改革後勢力大增並叛變，鄂圖曼向列強求助後深感危機，遂於1839年起推行現代化改革。'
+      },
+      {
+        id: 'q20', unit: 'ch3', type: '當代議題',
+        q: '2010年法國立法禁止在公共場所配戴蓋住全臉的面紗或面罩（2014年歐盟人權法庭維持禁令），這項爭議主要反映哪兩種價值之間的衝突？',
+        options: ['重商主義與自由貿易', '國家公共安全與人民宗教信仰自由', '社會主義與資本主義', '君主專制與共和體制'],
+        ans: 1,
+        exp: '法國禁令雖未明訂對象但被視為針對穆斯林（如布卡、尼卡伯），引發歐洲社會在「公共安全」與「信仰自由」間的激烈拉鋸。'
+      },
+
+      // 第 4 章 (10 題)
+      {
+        id: 'q21', unit: 'ch4', type: '航海路線',
+        q: '15至16世紀歐洲大航海時代，下列哪一位航海家及其船隊率先沿南美洲東岸南下、繞過南端進入太平洋，最終由其餘船員經印度洋返回西班牙完成「世界首次環球航行」？',
+        options: ['哥倫布', '達伽馬', '麥哲倫', '狄亞士'],
+        ans: 2,
+        exp: '1519年麥哲倫出發，1520年進太平洋，1521年於菲律賓捲入政治爭端遇害，其餘船員於1522年經印度洋返西完成首次環球航行。'
+      },
+      {
+        id: 'q22', unit: 'ch4', type: '經濟思想',
+        q: '16至18世紀歐洲列強盛行「重商主義」，下列哪一項政策最符合重商主義的核心邏輯？',
+        options: ['全面取消進口關稅，讓外國廉價商品自由傾銷本國', '相信金銀儲存量代表國力，提高進口關稅追求貿易順差以累積貴金屬', '放棄海外殖民地港口，將貴金屬全部贈送給亞洲國家', '廢除私有財產制並由國家平均分配土地'],
+        ans: 1,
+        exp: '重商主義堅信金銀量代表國力，因此調整進出口關稅、提高進口關稅保護本國商業利益，追求貿易順差以確保貴金屬流入。'
+      },
+      {
+        id: 'q23', unit: 'ch4', type: '殖民比較',
+        q: '17世紀初，哪一個歐洲國家成立「聯合東印度公司（VOC）」，以爪哇巴達維亞為據點壟斷香料群島貿易，並於1624年占領臺灣作為對日、中、東南亞的轉口中心？',
+        options: ['葡萄牙', '西班牙', '荷蘭', '英國'],
+        ans: 2,
+        exp: '荷蘭於1602年成立聯合東印度公司，以巴達維亞壟斷丁香、肉豆蔻等香料貿易，並於1624年占領臺灣。'
+      },
+      {
+        id: 'q24', unit: 'ch4', type: '物種交換',
+        q: '「哥倫布大交換」深刻改變全球生態與產業。下列關於新舊大陸物種交換影響的敘述，何者「錯誤」？',
+        options: ['源自新大陸的馬鈴薯與番薯傳入舊大陸，有助於人口成長', '源自舊大陸的甘蔗與咖啡在美洲以種植園形式發展', '源自新大陸的牛、羊與馬傳入歐洲後成為歐洲強勢物種', '舊大陸帶去的跨國疾病使缺乏免疫力的美洲原住民遭遇毀滅性浩劫'],
+        ans: 2,
+        exp: '牛、羊、馬、豬皆源自「舊大陸（歐亞非）」，傳入美洲新大陸後成為強勢物種，故 C 敘述顛倒。'
+      },
+      {
+        id: 'q25', unit: 'ch4', type: '文化交流',
+        q: '18世紀法國啟蒙學者伏爾泰曾高度讚美中國的科舉制度與宗教包容性，同時期英法上流社會也流行「中國風」並影響洛可可藝術。這反映了什麼歷史事實？',
+        options: ['19世紀前，亞洲文化對歐洲的影響遠大於歐洲文化對亞洲的影響', '18世紀歐洲已經全面殖民中國與印度', '歐洲人在18世紀便普遍抱持強烈的社會達爾文種族優越感', '中國當時透過軍事征服將科舉制強加於法國'],
+        ans: 0,
+        exp: '18世紀亞洲的茶、瓷器、絲綢征服歐洲市場，啟蒙學者亦推崇東方文化；直到1800年前後歐洲優越意識才逐漸轉為負面。'
+      },
+      {
+        id: 'q26', unit: 'ch4', type: '外交政策',
+        q: '1823年美國總統門羅發表聲明：「美國不願干涉歐洲事務，也希望歐洲不要干預美洲事務。」請問當時英國為何選擇與美國合作支持中南美洲獨立？',
+        options: ['英國想把北美十三殖民地交還給西班牙', '英國希望藉機打入長期被西班牙、葡萄牙壟斷的中南美洲市場', '英國受到奧國首相梅特涅的軍事威脅', '英國打算在南美洲建立奴隸制帝國'],
+        ans: 1,
+        exp: '中南美洲原本長期被西、葡壟斷貿易，英國為打入中南美洲廣大市場，因此選擇支持中南美洲獨立並與美國門羅主義合作。'
+      },
+      {
+        id: 'q27', unit: 'ch4', type: '思想與漫畫',
+        q: '1899年一幅諷刺漫畫描繪英國人與美國人各自背著裝滿有色人種的竹籃，踏過寫著「野蠻、無知、迷信」的石頭爬上山頂，呼應英國作家吉卜林的《白人的負擔》。此圖反映19世紀後半葉歐洲流行何種思潮？',
+        options: ['烏托邦社會主義', '社會達爾文主義與種族優越意識', '孤立主義', '泛伊斯蘭主義'],
+        ans: 1,
+        exp: '1860年代後流行社會達爾文主義（適者生存），使白種人產生種族優越感，自認有責任統治與教化「劣等的」有色民族。'
+      },
+      {
+        id: 'q28', unit: 'ch4', type: '非洲殖民',
+        q: '歐洲人原本受熱帶氣候與瘧疾阻擋，僅能在非洲沿海設點；直到1850年後得以深入非洲內陸並掀起「非洲大獵」的關鍵醫學突破為何？',
+        options: ['青黴素（盤尼西林）問世', '奎寧被證實可治療瘧疾', '牛痘疫苗引進剛果', '阿拉伯眼睛解剖學傳入'],
+        ans: 1,
+        exp: '1850年奎寧被證實可治療瘧疾，加上工業革命對原料市場的需求與英人李文斯頓的探險著作，促使歐洲深入非洲內陸。'
+      },
+      {
+        id: 'q29', unit: 'ch4', type: '帝國動機',
+        q: '19世紀下半葉，當英法積極在非洲與東南亞爭奪工業原料與商品市場時，俄羅斯帝國積極向中亞擴張的最主要動機為何？',
+        options: ['尋找橡膠與錫礦產地', '追求領土擴張與取得暖水港（市場、原料、投資均屬次要）', '傳播基督新教與建立定居殖民地', '尋找通往美洲的新航道'],
+        ans: 1,
+        exp: '課本明確指出：俄羅斯帝國擴張的主要動機是「領土與暖水港」，市場、原料與投資皆屬次要。'
+      },
+      {
+        id: 'q30', unit: 'ch4', type: '史料省思',
+        q: '二戰期間一份秘密傳單寫道：「國家從來就不是目的，唯有當他成為讓人類實現目標的條件時，他才具有重要性……我們成長於一個肆意箝制一切言論自由的國度。」這份傳單出自下列哪一組織？',
+        options: ['英國憲章運動工會', '法國大革命雅各賓派', '德國慕尼黑大學「白玫瑰」反抗組織', '委內瑞拉玻利瓦爾革命軍'],
+        ans: 2,
+        exp: '此為1942–1943年慕尼黑大學師生「白玫瑰」組織散發的反納粹傳單節錄，旨在呼籲民眾反抗希特勒極權暴行。'
+      }
+    ];
+
+    /* ============================================================
+       4. 狀態管理 (localStorage 持久化)
+    ============================================================ */
+    const STORAGE_KEY = 'jetstudy_history_nani3_v1';
+    const DEFAULT_STATE = {
+      completedNodes: [], // e.g. ['1-1', '1-2']
+      xp: 0,
+      maxStreak: 0,
+      fcStatus: {},       // { fc1: 'mastered' | 'fuzzy' | 'unknown' }
+      wrongIds: [],       // ['q1', 'q5']
+      quizSolvedIds: [],  // 累計答對過的不重複題目 ID，用於計算段考準備度
+      darkMode: false
+    };
+
+    let state = loadState();
+    let currentTab = 'path';
+
+    // 閃卡狀態
+    let fcFilter = 'all';
+    let fcDeck = [...FLASHCARDS];
+    let fcIndex = 0;
+    let fcFlipped = false;
+
+    // 微課程 Modal 狀態
+    let activeNode = null;
+    let activeUnitColor = 'indigo';
+    let lessonStep = 1;
+    let clozeMode = false;
+    let nodeQuizProgress = {}; // { qIdx: true/false }
+
+    // 刷題狀態
+    let quizQueue = [];
+    let quizCurrentIdx = 0;
+    let quizMode = 'all';
+    let quizAnswered = false;
+    let quizScoreCount = 0;
+    let quizSessionXp = 0;
+    let quizCombo = 0;
+    let quizSessionMaxCombo = 0;
+    let quizBreakdown = { ch2: { right: 0, total: 0 }, ch3: { right: 0, total: 0 }, ch4: { right: 0, total: 0 } };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return JSON.parse(JSON.stringify(DEFAULT_STATE));
+        return { ...JSON.parse(JSON.stringify(DEFAULT_STATE)), ...JSON.parse(raw) };
+      } catch (e) {
+        return JSON.parse(JSON.stringify(DEFAULT_STATE));
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        // 忽略無痕模式或容量限制錯誤
+      }
+      updateHeaderStats();
+    }
+
+    /* ============================================================
+       5. 初始化與共用 UI 工具
+    ============================================================ */
+    function initApp() {
+      applyTheme();
+      renderStudyPath();
+      updateHeaderStats();
+      switchTab('path');
+      setFcFilter('all');
+      updateWrongCountsUI();
+
+      // 鍵盤快捷鍵（閃卡分頁專用）
+      document.addEventListener('keydown', (e) => {
+        if (currentTab !== 'flashcards') return;
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.code === 'Space') {
+          e.preventDefault();
+          flipFlashcard();
+        } else if (e.code === 'ArrowRight') {
+          e.preventDefault();
+          nextFlashcard();
+        } else if (e.code === 'ArrowLeft') {
+          e.preventDefault();
+          prevFlashcard();
+        }
+      });
+    }
+
+    function applyTheme() {
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      if (state.darkMode) {
+        html.classList.add('dark');
+        icon.textContent = '☀️';
+      } else {
+        html.classList.remove('dark');
+        icon.textContent = '🌙';
+      }
+    }
+
+    function toggleDarkMode() {
+      state.darkMode = !state.darkMode;
+      applyTheme();
+      saveState();
+    }
+
+    function showToast(msg, type = 'indigo') {
+      const container = document.getElementById('toast-container');
+      const colors = {
+        indigo: 'bg-indigo-600 text-white',
+        emerald: 'bg-emerald-600 text-white',
+        amber: 'bg-amber-500 text-white',
+        rose: 'bg-rose-600 text-white'
+      };
+      const toast = document.createElement('div');
+      toast.className = `px-4 py-2.5 rounded-2xl shadow-lg text-xs sm:text-sm font-bold animate-pop ${colors[type] || colors.indigo}`;
+      toast.textContent = msg;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 2200);
+    }
+
+    function updateHeaderStats() {
+      // 計算段考準備度：節點完成 50% + 閃卡掌握 25% + 刷題答對題庫 25%
+      const nodeRatio = state.completedNodes.length / 10;
+      const fcMastered = Object.values(state.fcStatus).filter(v => v === 'mastered').length;
+      const fcRatio = fcMastered / FLASHCARDS.length;
+      const quizRatio = state.quizSolvedIds.length / QUIZ_BANK.length;
+      const readiness = Math.min(100, Math.round((nodeRatio * 50) + (fcRatio * 25) + (quizRatio * 25)));
+
+      document.getElementById('readiness-text-desktop').textContent = readiness + '%';
+      document.getElementById('readiness-bar-desktop').style.width = readiness + '%';
+      document.getElementById('readiness-text-mobile').textContent = readiness + '%';
+      document.getElementById('readiness-bar-mobile').style.width = readiness + '%';
+
+      document.getElementById('xp-display').textContent = state.xp;
+      document.getElementById('streak-display').textContent = state.maxStreak;
+
+      document.getElementById('path-completed-count').textContent = state.completedNodes.length;
+      document.getElementById('path-fc-count').textContent = fcMastered;
+
+      document.getElementById('fc-mastered-num').textContent = fcMastered;
+      document.getElementById('fc-mastery-rate').textContent = Math.round(fcRatio * 100) + '%';
+
+      updateWrongCountsUI();
+    }
+
+    function updateWrongCountsUI() {
+      const count = state.wrongIds.length;
+      const navBadge = document.getElementById('nav-wrong-badge');
+      const menuCount = document.getElementById('menu-wrong-count');
+      const btnWrong = document.getElementById('btn-start-wrong');
+
+      if (count > 0) {
+        navBadge.textContent = count;
+        navBadge.classList.remove('hidden');
+      } else {
+        navBadge.classList.add('hidden');
+      }
+      if (menuCount) menuCount.textContent = count;
+      if (btnWrong) btnWrong.disabled = count === 0;
+    }
+
+    function switchTab(tabId) {
+      currentTab = tabId;
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        const isActive = btn.dataset.tab === tabId;
+        if (isActive) {
+          btn.className = 'tab-btn flex-1 sm:flex-none whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 bg-slate-900 text-white dark:bg-indigo-600 shadow-sm';
+        } else {
+          btn.className = 'tab-btn flex-1 sm:flex-none whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ============================================================
+       6. 分頁一：學習路徑渲染與微課程彈窗
+    ============================================================ */
+    const COLOR_MAP = {
+      emerald: {
+        banner: 'from-emerald-600 to-teal-600',
+        badge: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
+        ring: 'border-emerald-500 ring-emerald-500/20',
+        iconBg: 'bg-emerald-600 text-white',
+        iconIdle: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800',
+        spine: 'bg-emerald-200 dark:bg-emerald-900/60'
+      },
+      amber: {
+        banner: 'from-amber-500 to-orange-500',
+        badge: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+        ring: 'border-amber-500 ring-amber-500/20',
+        iconBg: 'bg-amber-500 text-white',
+        iconIdle: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800',
+        spine: 'bg-amber-200 dark:bg-amber-900/60'
+      },
+      indigo: {
+        banner: 'from-indigo-600 to-violet-600',
+        badge: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300',
+        ring: 'border-indigo-500 ring-indigo-500/20',
+        iconBg: 'bg-indigo-600 text-white',
+        iconIdle: 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800',
+        spine: 'bg-indigo-200 dark:bg-indigo-900/60'
+      }
+    };
+
+    function renderStudyPath() {
+      const container = document.getElementById('study-path-container');
+      container.innerHTML = '';
+
+      UNITS.forEach((unit) => {
+        const theme = COLOR_MAP[unit.color];
+        const doneInUnit = unit.nodes.filter(n => state.completedNodes.includes(n.id)).length;
+
+        const unitWrap = document.createElement('div');
+        unitWrap.className = 'relative';
+
+        // 單元橫幅卡片
+        let html = `
+          <div class="rounded-3xl bg-gradient-to-r ${theme.banner} text-white p-5 sm:p-6 shadow-md mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="text-xs font-bold uppercase tracking-wider opacity-90">${unit.label}</div>
+              <h2 class="text-xl sm:text-2xl font-black tracking-tight mt-0.5">${unit.title}</h2>
+              <p class="text-xs sm:text-sm opacity-90 mt-1">${unit.desc}</p>
+            </div>
+            <div class="shrink-0 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-2xl text-center self-start sm:self-center">
+              <div class="text-[11px] font-bold opacity-90">單元進度</div>
+              <div class="text-lg font-black">${doneInUnit} / ${unit.nodes.length}</div>
+            </div>
+          </div>
+
+          <!-- 垂直蜿蜒路徑節點 -->
+          <div class="relative max-w-2xl mx-auto py-2">
+            <!-- 中央連接線 -->
+            <div class="hidden sm:block absolute left-1/2 top-4 bottom-4 w-1 -translate-x-1/2 ${theme.spine} rounded-full"></div>
+            <div class="space-y-5 relative z-10">
+        `;
+
+        unit.nodes.forEach((node, idx) => {
+          const isDone = state.completedNodes.includes(node.id);
+          const offsetClass = idx % 2 === 0 ? 'sm:-translate-x-8' : 'sm:translate-x-8';
+
+          html += `
+            <div class="flex justify-center">
+              <button onclick="openLessonModal('${unit.id}', '${node.id}')" class="w-full sm:w-[88%] ${offsetClass} text-left bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border-2 ${isDone ? theme.ring + ' ring-4' : 'border-slate-200/90 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'} shadow-soft hover:shadow-card transition-all duration-200 flex items-center gap-4 group active:scale-[0.99]">
+                <!-- 圓形節點狀態 -->
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl shrink-0 flex items-center justify-center font-black text-base sm:text-lg border-2 transition group-hover:scale-105 ${isDone ? theme.iconBg + ' border-transparent shadow-md' : theme.iconIdle}">
+                  ${isDone ? '✓' : node.id}
+                </div>
+                <!-- 節點文字 -->
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <span class="text-[11px] font-bold px-2 py-0.5 rounded-md ${theme.badge}">節點 ${node.id}</span>
+                    <span class="text-xs font-medium text-slate-400">⏱️ ${node.time}</span>
+                    ${isDone ? '<span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">★★★ 已掌握</span>' : '<span class="text-[11px] font-semibold text-slate-400">尚未通關</span>'}
+                  </div>
+                  <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-white truncate">${node.title}</h3>
+                  <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">${node.subtitle}</p>
+                </div>
+                <!-- 箭頭 -->
+                <div class="shrink-0 w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-indigo-600 transition">
+                  →
+                </div>
+              </button>
+            </div>
+          `;
+        });
+
+        html += `</div></div>`;
+        unitWrap.innerHTML = html;
+        container.appendChild(unitWrap);
+      });
+    }
+
+    function formatKeywords(text) {
+      return text.replace(/\{\{(.*?)\}\}/g, '<span class="kw" onclick="toggleSingleKw(this)">$1</span>');
+    }
+
+    function toggleSingleKw(el) {
+      if (!clozeMode) return;
+      el.classList.toggle('revealed');
+    }
+
+    function openLessonModal(unitId, nodeId) {
+      const unit = UNITS.find(u => u.id === unitId);
+      const node = unit.nodes.find(n => n.id === nodeId);
+      if (!unit || !node) return;
+
+      activeNode = node;
+      activeUnitColor = unit.color;
+      lessonStep = 1;
+      clozeMode = false;
+      nodeQuizProgress = {};
+
+      const theme = COLOR_MAP[unit.color];
+      const badge = document.getElementById('modal-unit-badge');
+      badge.textContent = `${unit.label}｜節點 ${node.id}`;
+      badge.className = `text-[11px] font-bold px-2.5 py-0.5 rounded-full ${theme.badge}`;
+      document.getElementById('modal-time-badge').textContent = `⏱️ 預計 ${node.time}`;
+      document.getElementById('modal-node-title').textContent = node.title;
+
+      // 渲染 Step 1 重點卡片
+      const step1El = document.getElementById('lesson-step1-content');
+      step1El.classList.remove('cloze-active');
+      step1El.innerHTML = node.cards.map(card => `
+        <div class="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 sm:p-5 border border-slate-200/70 dark:border-slate-700/80">
+          <h4 class="font-black text-slate-900 dark:text-white text-sm sm:text-base mb-3">${card.heading}</h4>
+          <ul class="space-y-2.5 text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+            ${card.points.map(pt => `
+              <li class="flex items-start gap-2">
+                <span class="text-indigo-500 font-bold mt-0.5">▸</span>
+                <span>${formatKeywords(pt)}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `).join('');
+
+      // 渲染 Step 2 隨堂測驗
+      renderNodeQuiz();
+
+      // 重置遮蔽按鈕狀態
+      updateClozeBtnUI();
+      switchLessonStep(1);
+
+      const modal = document.getElementById('lesson-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLessonModal() {
+      const modal = document.getElementById('lesson-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function switchLessonStep(step) {
+      lessonStep = step;
+      const s1Btn = document.getElementById('step1-btn');
+      const s2Btn = document.getElementById('step2-btn');
+      const s1Content = document.getElementById('lesson-step1-content');
+      const s2Content = document.getElementById('lesson-step2-content');
+      const clozeCtrl = document.getElementById('cloze-controls');
+      const gotoStep2 = document.getElementById('modal-goto-step2');
+      const finishBtn = document.getElementById('modal-finish-node');
+      const hint = document.getElementById('modal-footer-hint');
+
+      if (step === 1) {
+        s1Btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-white dark:bg-indigo-600 transition';
+        s2Btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 transition';
+        s1Content.classList.remove('hidden');
+        s2Content.classList.add('hidden');
+        clozeCtrl.classList.remove('hidden');
+        gotoStep2.classList.remove('hidden');
+        finishBtn.classList.add('hidden');
+        hint.textContent = '可開啟「遮蔽背誦模式」自我抽考關鍵字！';
+      } else {
+        s2Btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-white dark:bg-indigo-600 transition';
+        s1Btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 transition';
+        s1Content.classList.add('hidden');
+        s2Content.classList.remove('hidden');
+        clozeCtrl.classList.add('hidden');
+        gotoStep2.classList.add('hidden');
+        const allAnswered = activeNode && Object.keys(nodeQuizProgress).length === activeNode.quiz.length;
+        finishBtn.classList.toggle('hidden', !allAnswered);
+        hint.textContent = allAnswered ? '🎉 本節點隨堂測驗完成！已標記為已掌握！' : `完成下方 ${activeNode.quiz.length} 題隨堂測驗即可通關拿 +50 XP！`;
+      }
+      document.getElementById('modal-body').scrollTop = 0;
+    }
+
+    function toggleClozeMode() {
+      clozeMode = !clozeMode;
+      const step1El = document.getElementById('lesson-step1-content');
+      if (clozeMode) {
+        step1El.classList.add('cloze-active');
+        step1El.querySelectorAll('.kw').forEach(k => k.classList.remove('revealed'));
+      } else {
+        step1El.classList.remove('cloze-active');
+      }
+      updateClozeBtnUI();
+    }
+
+    function updateClozeBtnUI() {
+      const btn = document.getElementById('cloze-toggle-btn');
+      const lbl = document.getElementById('cloze-toggle-label');
+      if (clozeMode) {
+        lbl.textContent = '關閉遮蔽（顯示全部）';
+        btn.className = 'px-3 py-1.5 rounded-xl text-xs font-bold border border-emerald-500 bg-emerald-600 text-white transition flex items-center gap-1.5';
+      } else {
+        lbl.textContent = '開啟遮蔽背誦';
+        btn.className = 'px-3 py-1.5 rounded-xl text-xs font-bold border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 transition flex items-center gap-1.5';
+      }
+    }
+
+    function renderNodeQuiz() {
+      const container = document.getElementById('lesson-step2-content');
+      container.innerHTML = activeNode.quiz.map((item, qIdx) => `
+        <div class="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 sm:p-5 border border-slate-200/80 dark:border-slate-700">
+          <div class="text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-1.5">隨堂第 ${qIdx + 1} 題</div>
+          <p class="font-bold text-slate-900 dark:text-white text-sm sm:text-base mb-4 leading-relaxed">${item.q}</p>
+          <div class="space-y-2" id="nq-opts-${qIdx}">
+            ${item.options.map((opt, oIdx) => `
+              <button onclick="answerNodeQuiz(${qIdx}, ${oIdx})" class="w-full text-left px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-400 text-sm font-medium transition flex items-center gap-2.5">
+                <span class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-bold flex items-center justify-center shrink-0">${String.fromCharCode(65 + oIdx)}</span>
+                <span>${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+          <div id="nq-exp-${qIdx}" class="hidden mt-3 p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed"></div>
+        </div>
+      `).join('');
+    }
+
+    function answerNodeQuiz(qIdx, oIdx) {
+      if (nodeQuizProgress[qIdx] !== undefined) return;
+      const item = activeNode.quiz[qIdx];
+      const isCorrect = oIdx === item.ans;
+      nodeQuizProgress[qIdx] = isCorrect;
+
+      const btns = document.querySelectorAll(`#nq-opts-${qIdx} button`);
+      btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === item.ans) {
+          btn.className = 'w-full text-left px-4 py-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200 text-sm font-bold flex items-center gap-2.5';
+        } else if (idx === oIdx && !isCorrect) {
+          btn.className = 'w-full text-left px-4 py-3 rounded-xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200 text-sm font-bold flex items-center gap-2.5';
+        } else {
+          btn.className += ' opacity-50';
+        }
+      });
+
+      const expBox = document.getElementById(`nq-exp-${qIdx}`);
+      expBox.classList.remove('hidden');
+      expBox.className = `mt-3 p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed border ${isCorrect ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' : 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800 text-rose-900 dark:text-rose-200'}`;
+      expBox.innerHTML = `<strong>${isCorrect ? '✅ 答對了！' : '❌ 答錯了！正確答案為 ' + String.fromCharCode(65 + item.ans)}</strong><br>${item.exp}`;
+
+      // 檢查是否全部答完
+      if (Object.keys(nodeQuizProgress).length === activeNode.quiz.length) {
+        if (!state.completedNodes.includes(activeNode.id)) {
+          state.completedNodes.push(activeNode.id);
+          state.xp += 50;
+          saveState();
+          renderStudyPath();
+          showToast(`🎉 節點 ${activeNode.id} 通關成功！獲得 +50 XP`, 'emerald');
+        } else {
+          state.xp += 15;
+          saveState();
+          showToast('🔥 複習完成！獲得 +15 XP', 'indigo');
+        }
+        document.getElementById('modal-finish-node').classList.remove('hidden');
+        document.getElementById('modal-footer-hint').textContent = '🎉 本節點隨堂測驗完成！已標記為已掌握！';
+      }
+    }
+
+    /* ============================================================
+       7. 分頁二：3D 閃卡記憶邏輯
+    ============================================================ */
+    function setFcFilter(filter) {
+      fcFilter = filter;
+      document.querySelectorAll('.fc-filter-btn').forEach(btn => {
+        const active = btn.dataset.fcFilter === filter;
+        btn.className = active
+          ? 'fc-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-slate-900 text-white dark:bg-indigo-600'
+          : 'fc-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50';
+      });
+
+      if (filter === 'all') {
+        fcDeck = [...FLASHCARDS];
+      } else if (filter === 'unmastered') {
+        fcDeck = FLASHCARDS.filter(c => state.fcStatus[c.id] !== 'mastered');
+      } else {
+        fcDeck = FLASHCARDS.filter(c => c.unit === filter);
+      }
+
+      fcIndex = 0;
+      fcFlipped = false;
+      renderFlashcard();
+    }
+
+    function shuffleFlashcards() {
+      for (let i = fcDeck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [fcDeck[i], fcDeck[j]] = [fcDeck[j], fcDeck[i]];
+      }
+      fcIndex = 0;
+      fcFlipped = false;
+      renderFlashcard();
+      showToast('🔀 已隨機重新洗牌！', 'indigo');
+    }
+
+    function renderFlashcard() {
+      const stage = document.getElementById('fc-stage');
+      const empty = document.getElementById('fc-empty-state');
+
+      if (fcDeck.length === 0) {
+        stage.classList.add('hidden');
+        empty.classList.remove('hidden');
+        return;
+      }
+      stage.classList.remove('hidden');
+      empty.classList.add('hidden');
+
+      if (fcIndex >= fcDeck.length) fcIndex = 0;
+      if (fcIndex < 0) fcIndex = fcDeck.length - 1;
+
+      const card = fcDeck[fcIndex];
+      const inner = document.getElementById('fc-card-inner');
+      inner.classList.toggle('rotate-y-180', fcFlipped);
+
+      document.getElementById('fc-counter').textContent = `第 ${fcIndex + 1} / ${fcDeck.length} 張`;
+
+      const unitMeta = {
+        ch2: { name: '第 2 章 工業革命', cls: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' },
+        ch3: { name: '第 3 章 伊斯蘭世界', cls: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300' },
+        ch4: { name: '第 4 章 西方與近代', cls: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300' }
+      }[card.unit];
+
+      const badge = document.getElementById('fc-front-badge');
+      badge.textContent = unitMeta.name;
+      badge.className = `text-xs font-bold px-3 py-1 rounded-full ${unitMeta.cls}`;
+
+      document.getElementById('fc-front-text').textContent = card.front;
+      document.getElementById('fc-back-text').innerHTML = card.back.replace(/\n/g, '<br>');
+      document.getElementById('fc-back-tip').textContent = '💡 考點提示：' + card.tip;
+
+      const st = state.fcStatus[card.id];
+      const pill = document.getElementById('fc-status-pill');
+      if (st === 'mastered') {
+        pill.textContent = '🟢 已掌握';
+        pill.className = 'px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300';
+      } else if (st === 'fuzzy') {
+        pill.textContent = '🟡 有點模糊';
+        pill.className = 'px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300';
+      } else if (st === 'unknown') {
+        pill.textContent = '🔴 還不熟';
+        pill.className = 'px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300';
+      } else {
+        pill.textContent = '尚未評分';
+        pill.className = 'px-2.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
+      }
+    }
+
+    function flipFlashcard() {
+      fcFlipped = !fcFlipped;
+      document.getElementById('fc-card-inner').classList.toggle('rotate-y-180', fcFlipped);
+    }
+
+    function nextFlashcard() {
+      fcFlipped = false;
+      fcIndex = (fcIndex + 1) % fcDeck.length;
+      renderFlashcard();
+    }
+
+    function prevFlashcard() {
+      fcFlipped = false;
+      fcIndex = (fcIndex - 1 + fcDeck.length) % fcDeck.length;
+      renderFlashcard();
+    }
+
+    function rateFlashcard(rating) {
+      if (fcDeck.length === 0) return;
+      const card = fcDeck[fcIndex];
+      const prevRating = state.fcStatus[card.id];
+      state.fcStatus[card.id] = rating;
+
+      if (rating === 'mastered' && prevRating !== 'mastered') {
+        state.xp += 10;
+        showToast('🟢 閃卡已掌握！+10 XP', 'emerald');
+      } else if (rating === 'unknown') {
+        // 排入後面幾張重出
+        const reinsertPos = Math.min(fcDeck.length, fcIndex + 3);
+        fcDeck.splice(reinsertPos, 0, card);
+        showToast('🔴 已安排稍後重出加強記憶', 'rose');
+      }
+
+      saveState();
+
+      if (fcFilter === 'unmastered' && rating === 'mastered') {
+        fcDeck.splice(fcIndex, 1);
+        fcFlipped = false;
+        renderFlashcard();
+      } else {
+        nextFlashcard();
+      }
+    }
+
+    /* ============================================================
+       8. 分頁三：段考刷題與錯題本邏輯
+    ============================================================ */
+    function startQuiz(mode, count) {
+      quizMode = mode;
+      let pool = [];
+
+      if (mode === 'all') {
+        pool = [...QUIZ_BANK];
+      } else if (mode === 'wrong') {
+        pool = QUIZ_BANK.filter(q => state.wrongIds.includes(q.id));
+        if (pool.length === 0) {
+          showToast('目前錯題本是空的喔！', 'emerald');
+          return;
+        }
+      } else {
+        pool = QUIZ_BANK.filter(q => q.unit === mode);
+      }
+
+      // 隨機洗牌
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+
+      quizQueue = pool.slice(0, Math.min(count, pool.length));
+      quizCurrentIdx = 0;
+      quizScoreCount = 0;
+      quizSessionXp = 0;
+      quizCombo = 0;
+      quizSessionMaxCombo = 0;
+      quizBreakdown = { ch2: { right: 0, total: 0 }, ch3: { right: 0, total: 0 }, ch4: { right: 0, total: 0 } };
+
+      document.getElementById('quiz-menu-view').classList.add('hidden');
+      document.getElementById('quiz-summary-view').classList.add('hidden');
+      document.getElementById('quiz-active-view').classList.remove('hidden');
+
+      renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+      quizAnswered = false;
+      const q = quizQueue[quizCurrentIdx];
+      const total = quizQueue.length;
+
+      document.getElementById('quiz-progress-text').textContent = `第 ${quizCurrentIdx + 1} / ${total} 題`;
+      document.getElementById('quiz-progress-bar').style.width = `${((quizCurrentIdx + 1) / total) * 100}%`;
+
+      const comboBadge = document.getElementById('quiz-combo-badge');
+      if (quizCombo >= 2) {
+        comboBadge.textContent = `🔥 ${quizCombo} 連對`;
+        comboBadge.classList.remove('hidden');
+      } else {
+        comboBadge.classList.add('hidden');
+      }
+
+      const unitMeta = {
+        ch2: { name: '第 2 章 工業革命', cls: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' },
+        ch3: { name: '第 3 章 伊斯蘭世界', cls: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300' },
+        ch4: { name: '第 4 章 西方與近代', cls: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300' }
+      }[q.unit];
+
+      const badge = document.getElementById('quiz-q-badge');
+      badge.textContent = unitMeta.name;
+      badge.className = `text-xs font-bold px-3 py-1 rounded-full ${unitMeta.cls}`;
+      document.getElementById('quiz-q-type').textContent = q.type || '單選題';
+      document.getElementById('quiz-q-text').textContent = q.q;
+
+      const optsEl = document.getElementById('quiz-options');
+      optsEl.innerHTML = q.options.map((opt, idx) => `
+        <button onclick="selectQuizOption(${idx})" class="w-full text-left p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/40 hover:border-indigo-400 dark:hover:border-indigo-500 text-sm sm:text-base font-medium transition flex items-start gap-3">
+          <span class="w-7 h-7 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-black flex items-center justify-center shrink-0 mt-0.5">${String.fromCharCode(65 + idx)}</span>
+          <span class="leading-relaxed">${opt}</span>
+        </button>
+      `).join('');
+
+      document.getElementById('quiz-explanation-box').classList.add('hidden');
+      document.getElementById('quiz-next-wrap').classList.add('hidden');
+    }
+
+    function selectQuizOption(selectedIdx) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+
+      const q = quizQueue[quizCurrentIdx];
+      const isCorrect = selectedIdx === q.ans;
+      quizBreakdown[q.unit].total++;
+
+      const btns = document.querySelectorAll('#quiz-options button');
+      btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.ans) {
+          btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200 text-sm sm:text-base font-bold flex items-start gap-3';
+        } else if (idx === selectedIdx && !isCorrect) {
+          btn.className = 'w-full text-left p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200 text-sm sm:text-base font-bold flex items-start gap-3';
+        } else {
+          btn.className += ' opacity-45';
+        }
+      });
+
+      const expBox = document.getElementById('quiz-explanation-box');
+      const banner = document.getElementById('quiz-result-banner');
+      const expText = document.getElementById('quiz-explanation-text');
+      expBox.classList.remove('hidden');
+
+      if (isCorrect) {
+        quizScoreCount++;
+        quizBreakdown[q.unit].right++;
+        quizCombo++;
+        if (quizCombo > quizSessionMaxCombo) quizSessionMaxCombo = quizCombo;
+        if (quizCombo > state.maxStreak) state.maxStreak = quizCombo;
+
+        const gained = 15 + (quizCombo >= 3 ? 5 : 0);
+        quizSessionXp += gained;
+        state.xp += gained;
+
+        if (!state.quizSolvedIds.includes(q.id)) {
+          state.quizSolvedIds.push(q.id);
+        }
+
+        // 若原本在錯題本中，答對後自動移出
+        let removedMsg = '';
+        const wrongIdx = state.wrongIds.indexOf(q.id);
+        if (wrongIdx !== -1 && quizMode === 'wrong') {
+          state.wrongIds.splice(wrongIdx, 1);
+          removedMsg = '（已從錯題本移出 ✨）';
+        }
+
+        expBox.className = 'mt-6 p-4 sm:p-5 rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/80 dark:bg-emerald-950/40 text-sm leading-relaxed animate-pop';
+        banner.className = 'font-black text-base mb-1.5 text-emerald-700 dark:text-emerald-300';
+        banner.textContent = `✅ 答對了！+${gained} XP ${removedMsg}`;
+      } else {
+        quizCombo = 0;
+        if (!state.wrongIds.includes(q.id)) {
+          state.wrongIds.push(q.id);
+        }
+        expBox.className = 'mt-6 p-4 sm:p-5 rounded-2xl border border-rose-200 dark:border-rose-800 bg-rose-50/80 dark:bg-rose-950/40 text-sm leading-relaxed animate-pop';
+        banner.className = 'font-black text-base mb-1.5 text-rose-700 dark:text-rose-300';
+        banner.textContent = `❌ 答錯了！正確答案是 (${String.fromCharCode(65 + q.ans)})（已自動加入錯題本）`;
+      }
+
+      expText.textContent = '解析：' + q.exp;
+      saveState();
+
+      const nextBtn = document.getElementById('quiz-next-btn');
+      nextBtn.textContent = quizCurrentIdx === quizQueue.length - 1 ? '查看成績分析 📊' : '下一題 →';
+      document.getElementById('quiz-next-wrap').classList.remove('hidden');
+    }
+
+    function nextQuizQuestion() {
+      if (quizCurrentIdx < quizQueue.length - 1) {
+        quizCurrentIdx++;
+        renderQuizQuestion();
+      } else {
+        showQuizSummary();
+      }
+    }
+
+    function showQuizSummary() {
+      document.getElementById('quiz-active-view').classList.add('hidden');
+      document.getElementById('quiz-summary-view').classList.remove('hidden');
+
+      const pct = Math.round((quizScoreCount / quizQueue.length) * 100);
+      document.getElementById('summary-score').textContent = pct + '%';
+      document.getElementById('summary-xp').textContent = '+' + quizSessionXp;
+      document.getElementById('summary-combo').textContent = quizSessionMaxCombo;
+      document.getElementById('summary-subtitle').textContent = `本次共答對 ${quizScoreCount} / ${quizQueue.length} 題`;
+      document.getElementById('summary-emoji').textContent = pct >= 90 ? '🏆' : pct >= 70 ? '🎉' : '💪';
+
+      const bdEl = document.getElementById('summary-breakdown');
+      const labels = {
+        ch2: { name: '第 2 章 工業革命', bar: 'bg-emerald-500' },
+        ch3: { name: '第 3 章 伊斯蘭世界', bar: 'bg-amber-500' },
+        ch4: { name: '第 4 章 西方與近代', bar: 'bg-indigo-500' }
+      };
+
+      bdEl.innerHTML = ['ch2', 'ch3', 'ch4']
+        .filter(k => quizBreakdown[k].total > 0)
+        .map(k => {
+          const item = quizBreakdown[k];
+          const rate = Math.round((item.right / item.total) * 100);
+          return `
+            <div>
+              <div class="flex justify-between text-xs font-bold mb-1">
+                <span>${labels[k].name}</span>
+                <span>${item.right}/${item.total} (${rate}%)</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                <div class="h-full ${labels[k].bar} rounded-full transition-all duration-500" style="width: ${rate}%"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+      const revBtn = document.getElementById('summary-review-wrong-btn');
+      revBtn.classList.toggle('hidden', state.wrongIds.length === 0);
+    }
+
+    function quitQuiz() {
+      document.getElementById('quiz-active-view').classList.add('hidden');
+      document.getElementById('quiz-summary-view').classList.add('hidden');
+      document.getElementById('quiz-menu-view').classList.remove('hidden');
+      updateWrongCountsUI();
+    }
+
+    /* ============================================================
+       9. 分頁四：考前速查表即時關鍵字搜尋
+    ============================================================ */
+    function filterCheatSheet() {
+      const q = document.getElementById('cs-search-input').value.trim().toLowerCase();
+      document.querySelectorAll('.cs-card').forEach(card => {
+        const rows = card.querySelectorAll('.cs-row');
+        let anyVisible = false;
+        rows.forEach(row => {
+          const match = !q || row.textContent.toLowerCase().includes(q);
+          row.classList.toggle('hidden', !match);
+          if (match) anyVisible = true;
+        });
+        // 若標題符合也顯示整張表
+        const titleMatch = card.querySelector('h3').textContent.toLowerCase().includes(q);
+        if (titleMatch) {
+          rows.forEach(r => r.classList.remove('hidden'));
+          anyVisible = true;
+        }
+        card.classList.toggle('hidden', !anyVisible);
+      });
+    }
+
+    /* ============================================================
+       10. 重置進度自訂彈窗
+    ============================================================ */
+    function openResetModal() {
+      const m = document.getElementById('reset-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeResetModal() {
+      const m = document.getElementById('reset-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function confirmResetProgress() {
+      const keepDark = state.darkMode;
+      state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      state.darkMode = keepDark;
+      saveState();
+      renderStudyPath();
+      setFcFilter('all');
+      quitQuiz();
+      closeResetModal();
+      showToast('已重置所有學習進度！重新出發 🚀', 'indigo');
+    }
+
+    // 啟動應用程式
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
